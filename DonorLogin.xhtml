@@ -1,0 +1,75 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      template="resources/templates/template.xhtml"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Login</title> 
+        <link href="resources/css/Login/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <link rel="shortcut icon" type="image/x-icon" href="../../../../resources/image/icon.png"/>
+        <link href="resources/css/Login/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+        <link href="resources/css/Login/metisMenu.min.css" rel="stylesheet" type="text/css"/>
+        <link href="resources/css/Login/startmin.css" rel="stylesheet" type="text/css"/>
+        <script src="../../js/jquery.min.js"></script>
+        <script src="../../js/bootstrap.min.js"></script>
+        <script src="../../js/metisMenu.min.js"></script>
+        <script src="../../js/startmin.js"></script> 
+    </h:head>
+   
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 col-md-offset-4">
+                    <div class="login-panel panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Login</h3>
+                        </div>
+                        <div class="panel-body">
+                            <h:form id="loginform" class="form-horizontal" role="form">
+                                <p:growl id="growl" showDetail="true" autoUpdate="true" severity="information,fatal"/>
+                                <div class="col-md-12">
+                                    <label>User Name</label>
+                                </div>
+                                <div class="col-md-12 textBoxMargin6px">
+                                    <p:inputText id="login-username" type="text" value="#{login.role.userName}" class="form-control"
+                                                 placeholder="username" required="true" requiredMessage="Enter user name"/>                                        
+                                    <p:message for="login-username" />
+                                </div>
+                                <div class="col-md-12">
+                                    <label >Password</label>
+                                </div>
+                                <div class="col-md-12 textBoxMargin6px">
+                                    <p:password id="login-password" value="#{login.role.password}" class="form-control"
+                                                placeholder="password" required="true" requiredMessage="Enter password"/>
+                                    <p:message for="login-password"/>
+                                </div>
+                                <div class="col-md-12">
+                                    <label></label>
+                                </div>
+                                <div class="col-sm-12 textBoxMargin6px">
+                                    <h:selectBooleanCheckbox value="Remeber Me"></h:selectBooleanCheckbox> Remember Me  
+                                    
+                                </div>
+                              
+                                <div class="col-sm-12 textBoxMargin6px">
+                                    <p:commandButton value="Login" action="#{login.loginAction()}" 
+                                                     process="@this,loginform" update="@this,loginform" 
+                                                     validateClient="true" class="btn btn-block btn-warning form-control"/>                                     
+                                </div>
+                                <div class="col-sm-12 textBoxMargin6px">
+                                    <b>
+                                        <p:separator></p:separator>
+                                    <p>Don't have an online account?</p>
+                                    <p>(Whole Blood donors Only)</p></b>
+                                    <a href="erp/hrms/Donor/AccountCreate.xhtml"></a>
+                                    <p>Become a blood donor -<a href="erp/hrms/Donor/Reg.xhtml">Register now</a></p>
+                                    <p>Already a donor?<a href="erp/hrms/Donor/AccountCreate.xhtml">create an account</a></p>
+                                </div>
+                            </h:form>
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
