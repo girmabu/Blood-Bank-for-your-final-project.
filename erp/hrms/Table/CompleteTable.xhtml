@@ -1,0 +1,140 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    template="../../../resources/templates/templateHome.xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <ui:define name="navigaion_content">
+        <li class="header">MAIN NAVIGATION</li>  
+        <li><a href="../../../Login.xhtml"><i class="fa fa-camera"> </i> <span>Logout</span></a></li> 
+
+        <li><a href="TableRequest.xhtml"><i class="fa fa-user"></i> <span>Dashboard</span></a></li> 
+        <li class="header">USER NAVIGATION</li> 
+
+
+
+    </ui:define>
+
+    <ui:define name="contents">
+        <h:form id="frmTop"> 
+            <p:toolbar style="background-color:white;border-color: white ; margin-bottom: 10px">
+                <f:facet name="left">
+                    <span class="ui-separator" style="color: blue !important">
+                        Logged as: #{logged.loggedName.firstName} #{logged.loggedLname.middleName} #{logged.loggedSurname.lastName}
+                    </span> 
+                </f:facet>
+                <f:facet name="right">
+
+                    <span class="ui-separator">
+                        <span class="ui-icon ui-icon-grip-dotted-vertical"/>
+                    </span> 
+                    <a href="CompleteTable.xhtml"><i class="fa fa-fw fa-refresh" title="Refresh"></i></a>
+                    <span class="ui-separator">
+                        <span class="ui-icon ui-icon-grip-dotted-vertical"/>
+                    </span>
+
+                    <span class="ui-separator">
+                        <span class="ui-icon ui-icon-grip-dotted-vertical"/>
+                    </span>
+                </f:facet>
+            </p:toolbar>
+        </h:form> 
+        <h:form id="frmTblComplete">
+            <p:growl showDetail="true" autoUpdate="true"/>
+            <div class="col-md-6">
+              Hospitals Blood Request Completed Amount:-  <p:outputLabel value="  #{logged.loggedList.size()}" style="color: red"/>
+            </div>
+            <h:panelGroup style="border: 0px; background-color: transparent" id="pnlDtSearch" rendered="#{hospitalController.renderPnlManPage}">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="box box-info ">                      
+                            <div class="box-body ">
+
+                                <div class="box-body ">
+                                    <div class="col-md-12" >  
+                                        <div class="col-md-12" style="margin-top: 30px;">
+                                            <div class="form-group">
+                                                <p:dataTable id="tblCompletedList"  value="#{logged.loggedList}"
+                                                             var="hc" selectionMode="single" rowIndexVar="num"   
+                                                             rowKey="#{hc.id}"  rows="5" class="dataTable"
+                                                             paginator="true" paginatorPosition="bottom" editable="true"> 
+                                                    <p:ajax event="rowSelect" process="@this,tblCompletedList"
+                                                            update=":frmTop" />
+                                                    <p:column style="width:80px;">
+                                                        <f:facet name="header">
+                                                            <h:outputText value="No" />
+                                                        </f:facet>
+                                                        <h:outputText value="#{num+1}"/> 
+                                                    </p:column>
+                                                    <p:column>
+                                                        <f:facet name="header">
+                                                            <h:outputText value="Hospital Name"/>                                                        
+                                                        </f:facet>
+                                                        <h:outputText  value="#{hc.hospitalid.name}"   />
+                                                    </p:column>
+                                                    <p:column>
+                                                        <f:facet name="header">
+                                                            <h:outputText value="Approved Date"/>                                                        
+                                                        </f:facet>
+                                                        <h:outputText  value="#{hc.supplied_date}"   />
+                                                    </p:column>
+                                                    <p:column >
+                                                        <f:facet name="header">
+                                                            <h:outputText value="Approved Unit"/>
+                                                        </f:facet>
+                                                        <h:outputText value="#{hc.supplied_unit} " />
+                                                    </p:column> 
+                                                    <p:column>
+                                                        <f:facet name="header">
+                                                            <h:outputText value="Expired Date"/>                                                        
+                                                        </f:facet>
+                                                        <h:outputText  value="#{hc.expiry_Date}"   />
+                                                    </p:column>
+                                                    <p:column>
+                                                        <f:facet name="header">
+                                                            <h:outputText value="Blood_Product"/>                                                        
+                                                        </f:facet>
+                                                        <h:outputText  value="#{hc.blood_Product}"   />
+                                                    </p:column>
+                                                    <p:column>
+                                                        <f:facet name="header">
+                                                            <h:outputText value="Blood Group"/>                                                        
+                                                        </f:facet>
+                                                        <h:outputText  value="#{hc.bloodgroupList.bloodgroup}"   />
+                                                    </p:column>
+                                                    <p:column>
+                                                        <f:facet name="header">
+                                                            <h:outputText value="Pateient History"/>                                                        
+                                                        </f:facet>
+                                                        <h:outputText  value="#{hc.patient_Id} #{hc.age}"   />
+                                                    </p:column>
+                                                    <p:column headerText="Delete">                                              
+                                                        <p:commandLink action="#{hospitalController.deleteComp()}" style="width: 50px;" 
+                                                                       process="@this,tblCompletedList" update=":frmTblComplete:tblCompletedList" value="Del" class="ui-icon ui-icon-trash">
+                                                            <p:confirm header="Confirmation" message="Are You sure?" icon="ui-icon-alert"/>
+                                                        </p:commandLink>
+                                                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade"> 
+                                                            <p:commandButton value="Yes" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" style="margin-right: 5px !important;"/>
+                                                            <p:commandButton value="No" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
+                                                        </p:confirmDialog>
+                                                    </p:column>
+                                                    <p:column headerText="Edit">                                              
+                                                        <p:commandButton actionListener="#{hospitalController}" style="width: 50px;" icon="ui-icon-check"
+                                                                         process=":frmTblComplete:tblCompletedList"  update=":frmTblComplete">
+                                                        </p:commandButton>
+                                                    </p:column>
+                                                </p:dataTable>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>                   
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </h:panelGroup> 
+        </h:form>
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,83 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+
+    template="../../../resources/templates/templateHome.xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <ui:define name="navigaion_content">
+        <li><a href="DonorHome.xhtml"><i class="fa fa-circle-o-notch"></i><span>Home</span></a></li> 
+        <li class="header">MAIN NAVIGATION</li>    
+
+        <li class="treeview">
+            <a href="#treeview-menu">
+                <i class="fa fa-files-o"></i>
+
+                <span>Why Give Blood</span>
+            </a>
+            <ul class="treeview-menu">
+                <li>
+                  
+
+                    <a href="GiveBlood.xhtml"><i class="fa fa-file-code-o"> Why give blood</i> </a>
+                </li>
+            </ul>
+           
+
+        </li>
+        <li class="treeview">
+            <a href="#treeview-menu">
+                <i class="fa fa-files-o"></i>
+
+                <span>Blood Donation Process</span>
+            </a>
+            <ul class="treeview-menu">
+                <li>
+
+                    <a href="#"><i class="fa fa-file-pdf-o"> Donation Process</i> </a>
+                </li>
+            </ul>
+           
+        </li>  
+    </ui:define>
+    <ui:define name="contents">
+        <h:panelGroup id="pnlSave">
+                    <section class="panel panel-default"  >
+                        <section class="panel-body" > 
+                            <div class="col-sm-12 textBoxMargin6px">
+                                <div class="col-sm-6">
+                                   
+                                        <h2>Who Can Give Blood</h2>
+                                        <p:separator></p:separator>
+                                        <p> Most people can give blood. You can give blood if you:</p>
+                                        <ul>
+                                            <li>
+                                            <p>are fit and healthy</p>
+                                            </li>
+                                        </ul>
+                                        <ul>
+                                            <li>
+                                            <p>Weight between 45Kg and 158Kg.</p>
+                                            </li>
+                                        </ul>
+                                        <ul>
+                                            <li>
+                                            <p>are aged between 15 and 70</p>
+                                            </li>
+                                        </ul>
+                                        <ul>
+                                            <li>
+                                            <p>are aged over 70  and have given a full blood donation in the last two years. </p>
+                                            </li>
+                                        </ul>
+                                        <h3>Is Donate Blood Is Affect My Health?</h3>
+                                        <p:separator></p:separator>
+                                </div>
+                            </div>
+                        </section>
+                    </section>
+                </h:panelGroup> 
+    </ui:define>
+</ui:composition>

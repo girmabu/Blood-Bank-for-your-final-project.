@@ -1,0 +1,230 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+
+    template="../../../resources/templates/templateHome.xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <ui:define name="navigaion_content">
+
+        <li><a href="../DonorHome.xhtml"><i class="fa fa-circle-o-notch"></i><span>Home</span></a></li> 
+        <li class="header">MAIN NAVIGATION</li>    
+
+        <li class="treeview">
+            <a href="#treeview-menu">
+                <i class="fa fa-files-o"></i>
+
+                <span>Why Give Blood</span>
+            </a>
+            <ul class="treeview-menu">
+                <li>
+
+                    <a href="#"><i class="fa fa-file-code-o"> Why give blood</i> </a>
+                </li>
+            </ul>
+
+
+        </li>
+        <li class="treeview">
+            <a href="#treeview-menu">
+                <i class="fa fa-files-o"></i>
+
+                <span>Blood Donation Process</span>
+            </a>
+            <ul class="treeview-menu">
+                <li>
+
+                    <a href="#"><i class="fa fa-file-pdf-o"> Donation Process</i> </a>
+                </li>
+            </ul>
+
+        </li>  
+    </ui:define>
+    <ui:define name="contents">
+        <div style="background-color: white">
+
+
+            <h1>Before You Register as a blood donor</h1>
+            <p>Most People can give blood but sometimes it is not possible to be a blood donor.</p>
+            <br></br>
+            <p>Please answer all of the following five questions, so that we can advise if blood donations is 
+                appropriate for you.</p>
+            <br></br>
+            <p>Your responses are not recorded in any ways!</p>
+            <p>These questions only apply if you want to register as a new blood donor. If you are
+
+                already registered as blood donor please <a href="AccountCreate.xhtml">Create online account</a></p>
+            <form id="frmTop">
+                <h:panelGroup style="border: 0px; background-color: transparent" id="pnlTipPoint" rendered="#{donorcontroller.renderTipPoint}">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="box box-info ">                      
+                                <div class="box-body ">
+                                    <div class="box-body ">
+                                        <div class="box-header" >
+
+                                        </div>
+                                        <div class="col-md-12" >                                        
+                                            <div class="col-sm-12">
+                                                <div class="col-sm-6" >                                           
+
+                                                    <div class="form-horizontal col-md-12">
+                                                        <div class="form-group">
+                                                            <div class="col-sm-6">                                                            
+                                                            </div>                                                          
+                                                            <div class="col-sm-6" style="color: red">
+                                                                <p> You are not eligible to register as blood donor</p>  
+                                                            </div>
+                                                        </div>
+                                                    </div> 
+                                                </div>
+                                            </div>                              
+                                        </div> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>                
+                </h:panelGroup>
+            </form>
+            <h:form id="formDonor">
+
+                <p:growl id="growl" autoUpdate="true" severity="information,fatal" showDetail="true"></p:growl>
+                <h:panelGroup id="pnlInputDonor">
+                    <section class="panel panel-default"  >
+                        <section class="panel-body" > 
+                            <div id="question">
+                                <ol>
+                                    <div class="col-md-12 textBoxMargin6px">
+                                        <div class="form-group form-horizontal required">                                         
+                                            <div class="col-sm-8">
+                                                <li>
+                                                    <p style="font-weight: bold">    Are You 15-75 years old?</p>
+                                                    <p>Find out more about why your age is important</p>
+
+                                                </li>
+                                                <p:selectOneRadio id="txtq1" class="col-sm-2"
+                                                                  value="#{donorcontroller.question.q1}" required="true"
+                                                                  requiredMessage="Please Enter Your Suggestion">
+                                                    <f:selectItem itemLabel="Yes" itemValue="Yes" />
+                                                    <f:selectItem itemLabel="No" itemValue="No" />                                                        
+                                                </p:selectOneRadio>
+                                                <p:message for="txtq1" />
+                                            </div>
+                                        </div> 
+                                    </div>
+                                    <div class="col-md-12 textBoxMargin6px">
+                                        <div class="form-group form-horizontal required">                                         
+                                            <div class="col-sm-8">
+                                                <li>
+                                                    <p style="font-weight: bold"> Do You currently weight less than 45kg(7 stone 12 pounds)?</p>
+                                                    <p>Find out more about why your weight is important</p>
+                                                </li>
+                                                <p:selectOneRadio id="txtq2" class="col-sm-2"
+                                                                  value="#{donorcontroller.question.q2}" required="true"
+                                                                  requiredMessage="Please Enter Your Suggestion">
+                                                    <f:selectItem itemLabel="Yes" itemValue="Yes" />
+                                                    <f:selectItem itemLabel="No" itemValue="No" />                                                        
+                                                </p:selectOneRadio>
+                                                <p:message for="txtq2" />
+                                            </div>
+                                        </div> 
+                                    </div>
+                                    <div class="col-md-12 textBoxMargin6px">
+                                        <div class="form-group form-horizontal required">                                         
+                                            <div class="col-sm-8">
+                                                <li>
+                                                    <p style="font-weight: bold"> Have you ever had a cancer other than basal cell carcinoma or cervical carcinoma insitu(CIN)</p>
+
+                                                </li>
+                                                <p:selectOneRadio id="txtq3" class="col-sm-2"
+                                                                  value="#{donorcontroller.question.q3}" required="true"
+                                                                  requiredMessage="Please Enter Your Suggestion">
+                                                    <f:selectItem itemLabel="Yes" itemValue="Yes" />
+                                                    <f:selectItem itemLabel="No" itemValue="No" />                                                        
+                                                </p:selectOneRadio>
+                                                <p:message for="txtq3" />
+                                            </div>
+                                        </div> 
+                                    </div>
+                                    <div class="col-md-12 textBoxMargin6px">
+                                        <div class="form-group form-horizontal required">                                         
+                                            <div class="col-sm-8">
+                                                <li>
+                                                    <p style="font-weight: bold"> Have you ever had a  cancer other than basal cell carcinoma or cervical carcinoma insitu(CIN)</p>
+
+                                                </li>
+                                                <p:selectOneRadio id="txtq4" class="col-sm-2"
+                                                                  value="#{donorcontroller.question.q4}" required="true"
+                                                                  requiredMessage="Please Enter Your Suggestion">
+                                                    <f:selectItem itemLabel="Yes" itemValue="Yes" />
+                                                    <f:selectItem itemLabel="No" itemValue="No" />                                                        
+                                                </p:selectOneRadio>
+                                                <p:message for="txtq4" />
+                                            </div>
+                                        </div> 
+                                    </div>
+                                    <div class="col-md-12 textBoxMargin6px">
+                                        <div class="form-group form-horizontal required">                                         
+                                            <div class="col-sm-8">
+                                                <li>
+                                                    <p style="font-weight: bold"> Have you ever had a cancer?</p>
+
+                                                </li>
+                                                <p:selectOneRadio id="txtq5" class="col-sm-2"
+                                                                  value="#{donorcontroller.question.q5}" required="true"
+                                                                  requiredMessage="Please Enter Your suggestion">
+                                                    <f:selectItem itemLabel="Yes" itemValue="Yes" />
+                                                    <f:selectItem itemLabel="No" itemValue="No" />                                                        
+                                                </p:selectOneRadio>
+                                                <p:message for="txtq5" />
+                                            </div>
+                                        </div> 
+                                    </div>
+                                </ol>  
+                            </div>
+
+                        </section>
+                    </section>
+                </h:panelGroup>
+                <h:panelGroup id="pnlTipPoint">
+                    <section class="panel panel-default"  >
+                        <section class="panel-body" > 
+                            <div class="col-sm-12 textBoxMargin6px">
+                                <div class="col-sm-6">
+                                    <div class="col-sm-12 form-horizontal">
+                                        <p>The above questions are very important to register as new blood donor.  <a href="GiveBlood.xhtml"> click </a> to know why those  questions are important </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </section>
+                </h:panelGroup>
+                <h:panelGroup id="pnlSave">
+                    <section class="panel panel-default"  >
+                        <section class="panel-body" > 
+                            <div class="col-sm-12 textBoxMargin6px">
+                                <div class="col-sm-6">
+                                    <div class="col-sm-12 form-horizontal">
+                                        <div class="col-sm-4">
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <p:commandButton class="btn  btn-block btn-primary col-lg-4 " 
+                                                             process="@this,pnlInputDonor"
+                                                             value="#{donorcontroller.confirm}"
+                                                             action="#{donorcontroller.createAccount()}"
+                                                             update="@this,pnlInputDonor"
+                                                             id="btnSave"  />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </section>
+                </h:panelGroup>
+            </h:form>
+        </div>
+    </ui:define>
+</ui:composition>

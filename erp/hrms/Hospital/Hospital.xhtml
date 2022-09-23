@@ -1,0 +1,50 @@
+
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+
+    template="../../../resources/templates/templateHome.xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <ui:define name="navigaion_content">
+        <li><a href="DonorHome.xhtml"><i class="fa fa-home"></i><span>Home</span></a></li> 
+        <li><a href="HospitalProfile.xhtml"><i class="fa fa-user-secret"></i><span>Profile</span></a></li> 
+        <li class="header">MAIN NAVIGATION</li>    
+
+        <li class="treeview">
+            <a href="#treeview-menu">
+                <i class="fa fa-files-o"></i>
+
+                <span>Give Tip Health</span>
+            </a>
+            <ul class="treeview-menu">
+                <li>
+
+                    <a href="GiveBlood.xhtml"><i class="fa fa-file-code-o"> Give Tip Health</i> </a>
+                </li>
+            </ul>
+
+
+        </li>
+        <li class="treeview">
+            <a href="#treeview-menu">
+                <i class="fa fa-files-o"></i>
+
+                <span>Blood Donation Process</span>
+            </a>
+            <ul class="treeview-menu">
+                <li>
+
+                    <a href="#"><i class="fa fa-file-pdf-o"> Donation Process</i> </a>
+                </li>
+            </ul>
+
+        </li>  
+    </ui:define>
+    <ui:define name="contents">
+        
+    </ui:define>
+</ui:composition>
+        

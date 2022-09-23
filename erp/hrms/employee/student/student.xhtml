@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    template="../../../../resources/templates/template.xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:define name="navigaion_content">
+        <li><a href="../hrmsDashboard.xhtml"><i class="fa fa-circle-o text-red"></i> <span>Dashboard</span></a></li> 
+        <li><a href="employee.xhtml"><i class="fa fa-circle-o text-red"></i> <span> Refresh </span></a></li> 
+    </ui:define>
+    <ui:define name="contents">
+        <h:form id="frmTop"> 
+            <p:toolbar style="background-color:white;border-color: white ; margin-bottom: 10px">
+                <f:facet name="right">
+                    <p:commandButton validateClient="true" action="#{studentController.createNewGatePassInfo()}"
+                                     icon="#{studentController.icone}"  style="background-color: white" 
+                                     process="@this" update="@this,:frmstudent" 
+                                     title="#{studentController.createOrSearchBundle}"/>
+                    <span class="ui-separator">
+                        <span class="ui-icon ui-icon-grip-dotted-vertical"/>
+                    </span> 
+                    <a href="employee.xhtml"><i class="fa fa-fw fa-refresh" title="Refresh"></i></a>
+                    <span class="ui-separator">
+                        <span class="ui-icon ui-icon-grip-dotted-vertical"/>
+                    </span>
+                    <a href="../hrmsDashboard.xhtml"><i class="fa fa-fw fa-dashboard" title="Dashboard"></i></a>
+                    <span class="ui-separator">
+                        <span class="ui-icon ui-icon-grip-dotted-vertical"/>
+                    </span>
+                </f:facet>
+            </p:toolbar>
+        </h:form>  
+        <h:form id="frmstudent">
+            <h:panelGroup style="border: 0px; background-color: transparent" id="pnlSearch" rendered="#{studentController.renderPnlManPage}">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="box box-info ">                      
+                            <div class="box-body ">
+                                <div class="box-body ">
+                                    <div class="box-header" >
+                                        <h3 class="box-title">
+                                            <h:outputLabel id="frmEmployeeHeader"  value="#{studentController.headerTitle}" />
+                                        </h3>                       
+                                    </div>
+                                    <div class="col-md-12" >                                        
+                                        <div class="col-sm-12">
+                                            <div class="col-sm-6" >                                           
+                                                <div class="form-horizontal col-md-12">
+                                                    <div class="form-group">
+                                                        <h:outputLabel for="txtSrchName" class="control-label col-sm-4" value="First Name:"/>                                                          
+                                                        <div class="col-sm-8">  
+                                                            <p:inputText id="txtSrchName" value="#{studentController.student.sname}" />                                                                                                                                                    
+                                                            <p:message for="txtSrchName" display="icon"/>                                                          
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-horizontal col-md-12">
+                                                    <div class="form-group">
+                                                        <div class="col-sm-4">                                                            
+                                                        </div>                                                          
+                                                        <div class="col-sm-3 ">
+                                                            <p:commandButton class="btn  btn-block btn-primary col-lg-4"  process="@this,txtSrchName"                                                                    
+                                                                             value="Search" action="#{studentController.findByFname()}"
+                                                                             id="btnSearch" update=":frmstudent:tblStudentList" />
+                                                        </div>
+                                                    </div>
+                                                </div> 
+                                            </div>
+                                        </div>                              
+                                    </div> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>                
+            </h:panelGroup>
+            <h:panelGroup style="border: 0px; background-color: transparent" id="pnlDtSearch1" rendered="#{studentController.renderPnlManPage}">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="box box-info ">                      
+                            <div class="box-body ">
+                                <div class="box-body ">
+                                    <div class="col-md-12" >  
+                                        <div class="col-md-12" style="margin-top: 30px;">
+                                            <div class="form-group">
+                                                <p:dataTable id="tblStudentList"   value="#{studentController.studentDataModel}"
+                                                             var="stud" selectionMode="single" rowIndexVar="num"  class="dataTable" 
+                                                             selection="#{studentController.selectedEmp}" rowKey="#{stud.id}" paginatorPosition="bottom" paginator="true">
+                                                    <p:ajax event="rowSelect" process="@this,tblStudentList" listener="#{studentController.selectStudent}"
+                                                            update=":frmstudent,:frmTop" />
+                                                    <p:column style="width:80px;">
+                                                        <f:facet name="header">
+                                                            <h:outputText value="No" />
+                                                        </f:facet>
+                                                        <h:outputText value="#{num+1}"/> 
+                                                    </p:column>
+                                                    <p:column>
+                                                        <f:facet name="header">
+                                                            <h:outputText value="Student Id"/>                                                        
+                                                        </f:facet>
+                                                        <h:outputText  value="#{stud.id}"   />
+                                                    </p:column>
+                                                    <p:column >
+                                                        <f:facet name="header">
+                                                            <h:outputText value="Full Name"/>
+                                                        </f:facet>
+                                                        <h:outputText value="#{stud.sname} #{stud.slname}" />
+                                                    </p:column> 
+                                                </p:dataTable>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>                   
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </h:panelGroup> 
+            <h:panelGroup style="border: 0px; background-color: transparent" id="pnlDtSearch" rendered="#{studentController.renderPnlCreateGatePass}">
+                <p:growl id="growl" showDetail="true" autoUpdate="true" severity="information"/>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="box box-info ">                      
+                            <div class="box-body ">
+                                <div class="box-header" >
+                                    <h3 class="box-title">
+                                        <h:outputLabel id="frmEmployeeHeader1"  value="Student Registration" />
+                                    </h3>                       
+                                </div>
+                                <div class="box-body ">
+                                    <div class="nav-tabs-custom">
+                                        <ul class="nav nav-tabs" id="myTab">
+                                            <li class="active"><a href="#tabPersonal" data-toggle="tab">Student</a></li>
+                                            <li><a href="#tabAddress"  data-toggle="tab">Address</a></li>
+                                        </ul>
+                                        <div class="tab-content" id="maintab">
+                                            <div class="tab-pane active" id="tabPersonal">
+                                                <h:panelGroup id="pnlinputStud">
+                                                    <section class="panel panel-default"  >
+                                                        <section class="panel-body" >    
+                                                            <div class="col-md-12 form-horizontal">
+                                                                <div class="col-md-6">
+                                                                    <h:outputLabel class="col-md-5 control-label" value="Required Information:" style="margin-left: 30%;margin-bottom: 2% "/>
+                                                                     <div class="form-group form-horizontal required"> 
+                                                                    <h:outputLabel class="col-md-4 control-label" value="Student Name:"/>
+                                                                    <div class="col-sm-8 textBoxMargin6px">
+                                                                        <p:inputText id="txtFname" value="#{studentController.student.sname}" />
+                                                                    </div>
+                                                                     </div>
+                                                                     <div class="form-group form-horizontal required"> 
+                                                                    <h:outputLabel class="col-md-4 control-label" value="Student Lname:"/>
+                                                                    <div class="col-sm-8 textBoxMargin6px">
+                                                                        <p:inputText id="txtAge" value="#{studentController.student.slname}"  />
+                                                                    </div> 
+                                                                     </div>
+                                                                     <div class="form-group form-horizontal required"> 
+                                                                        <h:outputLabel value="Gender:" class="control-label col-sm-4"/>                                           
+                                                                        <div class="col-sm-8">
+                                                                            <p:selectOneRadio id="txtSex" class="col-sm-6"
+                                                                                              value="#{studentController.student.ssex}" required="true"
+                                                                                              requiredMessage="Please Enter Gender">
+                                                                                <f:selectItem itemLabel="Male" itemValue="Male" />
+                                                                                <f:selectItem itemLabel="Female" itemValue="Female" />                                                        
+                                                                            </p:selectOneRadio>
+                                                                            <p:message for="txtSex" display="icon"/>
+                                                                        </div>
+                                                                    </div> 
+                                                                  
+                                                                      <div class="form-group form-horizontal required"> 
+                                                                   <h:outputLabel class="col-md-4 control-label" value="Student Section"/>
+                                                                    <div class="col-sm-8 textBoxMargin6px">
+                                                                        <p:inputText id="txtSection" value="#{studentController.student.ssection}" required="true" />
+                                                                    </div>  
+                                                                      </div>
+                                                                      <div class="form-group form-horizontal required">                                                                
+                                                                        <h:outputLabel for="txtDate" class="control-label col-sm-4" value="Brith Date:"/>    
+                                                                        <div class="col-sm-8">
+                                                                            <p:inputText id="txtDate" value="#{studentController.student.birthdate}"
+                                                                                         onclick="displayCalendar('frmstudent:txtDate', 'frmstudent:txtDate');"
+                                                                                         required="true" class="form-control" requiredMessage="Enter birth date"/> 
+                                                                            <p:message for="txtDate" display="icon"/>
+                                                                        </div>
+                                                                    </div> 
+                                                                </div>
+                                                                <div class="col-md-6 form-horizontal">
+                                                                    <h:outputLabel value="Optional Form:" style="margin-left: 55%; font-weight: bolder"/>
+                                                                      <div class="form-group form-horizontal required"> 
+                                                                     <h:outputLabel class="col-md-4 control-label" value="Phone Number:"/>
+                                                                <div class="col-sm-8 textBoxMargin6px">
+                                                                    <p:inputMask id="txtsPhone" mask="(+251) 999 99999" 
+                                                                                 value="#{studentController.student.sphone}"/>
+                                                                </div>
+                                                                </div>
+                                                                     <div class="form-group form-horizontal required"> 
+                                                                   <h:outputLabel class="col-md-4 control-label" value="Student Email"/>
+                                                                    <div class="col-sm-8 textBoxMargin6px">
+                                                                        <p:inputText id="txtEmail" value="#{studentController.student.semail}"  />
+                                                                    </div>  
+                                                                      </div> 
+                                                                </div>
+                                                            </div>
+                                                        </section>
+                                                    </section>
+                                                </h:panelGroup>
+                                            </div>
+                                            <div class="tab-pane" id="tabAddress">
+                                                <h:panelGroup id="pnlInputStudAddress" >
+                                                    <section class="panel panel-default"  >
+                                                        <section class="panel-body" >   
+                                                            <div class="col-md-6 form-horizontal">
+                                                                <h:outputLabel class="col-md-4 control-label" value="House Number:"/>
+                                                                <div class="col-sm-8 textBoxMargin6px" >
+                                                                    <p:inputText id="txtHouse" value="#{studentController.studentAddress.houseNumber}"/>
+                                                                </div>
+                                                                <h:outputLabel class="col-md-4 control-label" value="Phone Number:"/>
+                                                                <div class="col-sm-8 textBoxMargin6px">
+                                                                    <p:inputMask id="txtPhone" mask="(+999) 999 99999" required="true"
+                                                                                 value="#{studentController.studentAddress.phoneNumber}"/>
+                                                                </div>
+                                                                <div class="col-md-4"/>
+                                                                <div class="col-sm-4 textBoxMargin6px">
+                                                                    <p:commandButton class="btn  btn-block btn-primary col-sm-4 " value="Add"
+                                                                                     process="@this,pnlInputStudAddress" update="tblstudAddress,pnlInputStudAddress"
+                                                                                     action="#{studentController.addToAddress}" />  
+                                                                </div>
+                                                            </div>
+                                                        </section>
+                                                    </section>
+                                                </h:panelGroup>
+                                                <p:dataTable id="tblstudAddress" styleClass="dataTable" var="Adrs" 
+                                                             value="#{studentController.studAddressDataModel}"                                       
+                                                             rowIndexVar="num" lazy="true" editMode="cell" widgetVar="tblstudAddress"  
+                                                             rows="20" paginator="true" >   
+                                                    <p:column>
+                                                        <f:facet name="header">
+                                                            <h:outputText value="No" />
+                                                        </f:facet>
+                                                        <h:outputText value="#{num+1}"/>
+                                                    </p:column>                                                    
+                                                    <p:column >
+                                                        <f:facet name="header">
+                                                            <h:outputText value="House Number"/>                                                        
+                                                        </f:facet>
+                                                        <h:outputText value="#{Adrs.houseNumber}"  />
+                                                    </p:column>                                                
+                                                    <p:column >
+                                                        <f:facet name="header">
+                                                            <h:outputText value="Mobile Phone"/>                                                        
+                                                        </f:facet>
+                                                        <h:outputText value="#{Adrs.phoneNumber}"  />
+                                                    </p:column>  
+                                                </p:dataTable>
+                                            </div>
+                                        </div>  
+                                    </div>
+                                   <h:panelGroup id="pnlSave">
+                                        <section class="panel panel-default"  >
+                                            <section class="panel-body" > 
+                                                <div class="col-sm-12 textBoxMargin6px">
+                                                    <div class="col-sm-6">
+                                                        <div class="col-sm-12 form-horizontal">
+                                                            <div class="col-sm-4">
+                                                            </div>
+                                                            <div class="col-sm-4">
+                                                                <p:commandButton class="btn  btn-block btn-primary col-lg-4 " 
+                                                                                 value="#{studentController.saveOrUpdateButton}"
+                                                                                 id="btnSave" process="@this,pnlinputStud,:frmstudent:tblStudentList" action="#{studentController.save()}"
+                                                                                 update="pnlinputStud,:frmstudent,:frmstudent:tblStudentList"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </section>
+                                        </section>
+                                    </h:panelGroup>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </h:panelGroup>
+        </h:form>
+    </ui:define>
+</ui:composition>

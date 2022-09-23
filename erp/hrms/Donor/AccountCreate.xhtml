@@ -1,0 +1,262 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    template="../../../resources/templates/templateHome.xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <ui:define name="navigaion_content">
+        <li><a href="#"><i class="fa fa-user"></i><span>Home</span></a></li> 
+        <li class="header">MAIN NAVIGATION</li>    
+
+        <li class="treeview">
+            <a href="#treeview-menu">
+                <i class="fa fa-files-o"></i>
+
+                <span>Why Give Blood</span>
+            </a>
+            <ul class="treeview-menu">
+                <li>
+
+                    <a href="GiveBlood.xhtml"><i class="fa fa-file-code-o"> Why give blood</i> </a>
+                </li>
+            </ul>
+
+
+        </li>
+        <li class="treeview">
+            <a href="#treeview-menu">
+                <i class="fa fa-files-o"></i>
+
+                <span>Blood Donation Process</span>
+            </a>
+            <ul class="treeview-menu">
+                <li>
+
+                    <a href="#"><i class="fa fa-file-pdf-o"> Donation Process</i> </a>
+                </li>
+            </ul>
+
+        </li>  
+    </ui:define>
+    <ui:define name="contents">
+
+
+        <h:form id="frmTop"> 
+            <p:toolbar style="background-color:white;border-color: white ; margin-bottom: 10px">
+                <f:facet name="right">
+
+                    <span class="ui-separator">
+                        <span class="ui-icon ui-icon-grip-dotted-vertical"/>
+                    </span> 
+
+                    <a href="AccountCreate.xhtml"><i class="fa fa-fw fa-refresh" title="Refresh"></i></a>
+                    <span class="ui-separator">
+                        <span class="ui-icon ui-icon-grip-dotted-vertical"/>
+                    </span>
+
+                    <a href="Reg.xhtml"><i class="fa fa-fw fa-dashboard" title="Dashboard"></i></a>
+                    <span class="ui-separator">
+                        <span class="ui-icon ui-icon-grip-dotted-vertical"/>
+                    </span>
+                </f:facet>
+            </p:toolbar>
+        </h:form>
+        <h:panelGroup id="pnlInputDonor">
+            <section class="panel panel-default"  >
+                <section class="panel-body" > 
+                    <div id="account" style="background-color: white">
+                        <h1>Create An Account</h1>
+                        <h2>Sign up for your online account today!</h2>
+                        <p>By signing for an online account you will be able to do the following: </p>
+                        <ul>
+                            <li>
+                                <p>Find out where you can donate and book an appointment</p>
+                            </li>
+                            <li>
+                                <p>View,change or cancel appointments</p>
+                            </li>
+                            <li>
+                                <p>Update Your Personal details</p>
+                            </li>
+                            <li>
+                                <p>View Your donation history</p>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <p:separator></p:separator>
+                    <div class="box-body col-sm-12 " style="font-weight: lighter" >
+                        <p style="font-weight: lighter">You must use a unique <b>email address</b> that can only be accessed by yourself.</p> <p>This service is for<b> whole blood donors</b> who donate in <b>Ethiopia(Jimma)</b>
+                            only; component donors(including platelet nd plasma donors) are unable to sign up for an online account.</p>
+                    </div>
+                </section>
+            </section>
+
+        </h:panelGroup>
+        <h:form id="frmAccount">
+            <p:growl id="growl" showDetail="true" autoUpdate="true" severity="information"/>
+
+            <h:panelGroup id="pnlCreate">
+                <section class="panel panel-default"  >
+                    <section class="panel-body" > 
+                        <div class="col-sm-12 textBoxMargin6px">
+                            <p:separator></p:separator>
+                            <div class="col-sm-6">
+                                <div class="col-md-12 textBoxMargin6px">
+                                    <div class="form-group form-horizontal required">                                                               
+                                        <h:outputLabel for="txtfname" value="First Name:" class="control-label col-sm-4" />                                            
+                                        <div class="col-sm-8 ">    
+                                            <p:inputText id="txtfname" value="#{donorcontroller.donor.name}" 
+                                                         required="true" requiredMessage="Please Enter First Name"/>
+                                            <p:message for="txtfname" display="icon"/>  
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 textBoxMargin6px">
+                                    <div class="form-group form-horizontal required"> 
+                                        <h:outputLabel for="txtMName" value="Middle Name:" class="control-label col-sm-4"/>
+                                        <div class="col-sm-8" >  
+                                            <p:inputText id="txtMName" value="#{donorcontroller.donor.lname}"
+                                                         required="true" requiredMessage="Please Enter Middle Name" class="col-sm-4"/>
+                                            <p:message for="txtMName" display="icon"/>     
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 textBoxMargin6px">
+                                    <div class="form-group form-horizontal required"> 
+                                        <h:outputLabel value="Gender:" class="control-label col-sm-4"/>                                           
+                                        <div class="col-sm-8">
+                                            <p:selectOneRadio id="txtSex" class="col-sm-6"
+                                                              value="#{donorcontroller.donor.sex}" required="true"
+                                                              requiredMessage="Please Enter Gender">
+                                                <f:selectItem itemLabel="Male" itemValue="Male" />
+                                                <f:selectItem itemLabel="Female" itemValue="Female" />                                                        
+                                            </p:selectOneRadio>
+                                            <p:message for="txtSex" display="icon"/>
+                                        </div>
+                                    </div> 
+                                </div>
+                                <div class="col-md-12 textBoxMargin6px">
+                                    <div class="form-group form-horizontal required">                                                                
+                                        <h:outputLabel for="txtDate" class="control-label col-sm-4" value="Brith Date:"/>    
+                                        <div class="col-sm-8">
+                                            <p:inputText id="txtDate" value="#{donorcontroller.donor.dob}"
+                                                         onclick="displayCalendar('frmAccount:txtDate', 'frmAccount:txtDate');"
+                                                         required="true" class="form-control" requiredMessage="Enter birth date"/> 
+                                            <p:message for="txtDate" display="icon"/>
+                                        </div>
+                                    </div> 
+                                </div>
+                                <div class="col-md-12 textBoxMargin6px">
+                                    <div class="form-group form-horizontal required"> 
+                                        <h:outputLabel value="Age" class="control-label col-sm-4"/> 
+
+                                        <div class="col-sm-8">
+                                            <p:inputText id="txtAge" value="#{donorcontroller.donor.age}"
+
+                                                         required="true" requiredMessage="Please Enter Your Age"/>
+                                            <p:message for="txtAge" display="icon"/>  
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 textBoxMargin6px">
+                                    <div class="form-group form-horizontal required"> 
+                                        <h:outputLabel value="Phone Number:" class="control-label col-sm-4"/> 
+                                        <div class="col-sm-8 textBoxMargin6px">
+                                            <p:inputMask id="txtsPhone" mask="(+251)9 99 99 99 99" requiredMessage="please enter Your phone number"
+                                                         value="#{donorcontroller.donor.phonenumber}"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-12 form-horizontal">
+                                    <div>
+                                        <p:separator></p:separator>
+                                        <p style="font-weight: lighter;" ><b>Keep in mind</b> the email/username and password you will enter</p>
+                                    </div>
+                                    <p:separator></p:separator>
+                                    <div class="col-md-12 textBoxMargin6px">
+                                        <div class="form-group form-horizontal required"> 
+                                            <h:outputLabel value="Email/username" class="control-label col-sm-4"/> 
+
+                                            <div class="col-sm-8">
+                                                <p:inputText id="txtEmalAddress" value="#{donorcontroller.role.userName}"
+                                                             placeholder="email/username"
+                                                             required="true" requiredMessage="Please Enter Email/username"/>
+                                                <p:message for="txtEmalAddress" display="icon"/>  
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 form-horizontal">
+
+                                    <div class="col-md-12 textBoxMargin6px">
+                                        <div class="form-group form-horizontal required"> 
+                                            <h:outputLabel value="Password" class="control-label col-sm-4"/> 
+
+                                            <div class="col-sm-8">
+                                                <p:inputText id="txtPassword" type="password" value="#{donorcontroller.role.password}"
+
+                                                             required="true" requiredMessage="Please Enter Password"/>
+                                                <p:message for="txtPassword" display="icon"/>  
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 form-horizontal">
+
+                                    <div class="col-md-12 textBoxMargin6px">
+                                        <div class="form-group form-horizontal required"> 
+                                            <h:outputLabel value="Re Enter Password" class="control-label col-sm-4"/> 
+
+                                            <div class="col-sm-8">
+                                                <p:inputText id="txtConfrim" type="password" value="#{donorcontroller.role.password}"
+
+                                                             required="true" requiredMessage="Please Re enter Password"/>
+                                                <p:message for="txtConfrim" display="icon"/>  
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </section>
+                </section>
+            </h:panelGroup>
+            <h:panelGroup id="pnlSave">
+                <section class="panel panel-default"  >
+                    <section class="panel-body" > 
+                        <div class="col-sm-12 textBoxMargin6px">
+                            <div class="col-sm-6">
+                                <div class="col-sm-12 form-horizontal">
+                                    <div class="col-sm-4">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <p:commandButton class="btn  btn-block btn-primary col-lg-4 " 
+                                                         value="Create an account" process="@this,pnlCreate,:frmAccount" 
+                                                         update=":frmAccount" action="#{donorcontroller.create()}"
+                                                         id="btnCreate" >
+                                        </p:commandButton>
+                                    </div>    
+                                </div>
+                                <div class="col-sm-8" style="left: 100px;">
+                                    <p:separator></p:separator>
+
+                                    <p>Already have an online account? <a href="../../../DonorLogin.xhtml" style="background-color: yellow"> Sign In</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </section>
+            </h:panelGroup>
+        </h:form>
+    </ui:define>
+</ui:composition>

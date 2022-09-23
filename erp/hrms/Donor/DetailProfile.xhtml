@@ -1,0 +1,450 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+
+    template="../../../resources/templates/templateHome.xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <ui:define name="navigaion_content">
+
+        <li><a href="DonorAction.xhtml"><i></i> <span>Home</span></a></li> 
+        <li><a href="#"><i></i> <span>Change password</span></a></li> 
+    </ui:define>
+    <ui:define name="contents">
+
+        <h:form id="frmTop"> 
+            <p:toolbar style="background-color:white;border-color: white ; margin-bottom: 10px">
+                <f:facet name="right">
+
+                    <span class="ui-separator">
+                        <span class="ui-icon ui-icon-grip-dotted-vertical"/>
+                    </span> 
+
+                    <a href="DetailProfile.xhtml"><i class="fa fa-fw fa-refresh" title="Refresh"></i></a>
+                    <span class="ui-separator">
+                        <span class="ui-icon ui-icon-grip-dotted-vertical"/>
+                    </span>
+                    <a href="AccountCreate.xhtml"><i class="fa fa-fw fa-dashboard" title="Dashboard"></i></a>
+                    <span class="ui-separator">
+                        <span class="ui-icon ui-icon-grip-dotted-vertical"/>
+                    </span>
+                </f:facet>
+            </p:toolbar>
+        </h:form>  
+        <h:form id="frmDonorAction">
+            <h:panelGroup style="border: 0px; background-color: transparent" id="pnlSearch" rendered="#{donorcontroller.renderPnlManPage}">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="box box-info ">                      
+                            <div class="box-body ">
+                                <div class="box-body ">
+
+
+
+                                    <div class="col-sm-6" >                                           
+
+                                        <div class="form-horizontal col-md-12">
+                                            <div class="form-group">
+                                                <div class="col-sm-6">                                                            
+                                                </div>                                                          
+                                                <div class="col-sm-8">
+                                                    <p:commandButton class="btn  btn-block btn-primary col-lg-4"  process="@this"                                                                    
+                                                                     value="Your Detail And To Appoint" actionListener="#{donorcontroller.detail()}"
+                                                                     id="btnSearch" update=":frmDonorAction:tblDonorActionList" />
+                                                </div>
+                                            </div>
+                                        </div> 
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-horizontal col-md-12">
+
+                                            <div class="form-group">
+                                                <div class="col-sm-6">                                                            
+                                                </div>                                                          
+                                                <div class="col-sm-8">
+                                                    <p:commandButton class="btn  btn-block btn-primary col-lg-4"  process="@this"                                                                    
+                                                                     value="Change password" action="#{donorcontroller.changePassword()}"
+                                                                     id="btnPassword" update=":frmDonorAction:tblDonorActionList" />
+                                                </div>
+                                            </div>
+                                            </div>
+                                        </div>
+                                    
+
+                                </div> 
+
+                            </div>
+                        </div>
+                    </div>
+                </div>                
+            </h:panelGroup>
+            <h:panelGroup style="border: 0px; background-color: transparent" id="pnlDtSearch" rendered="#{donorcontroller.renderPnlManPage}">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="box box-info ">                      
+                            <div class="box-body ">
+                                <div class="box-body ">
+                                    <div class="col-md-12" >  
+                                        <div class="col-md-12" style="margin-top: 30px;">
+                                            <div class="form-group">
+                                                <p:dataTable id="tblDonorActionList"  value="#{donorcontroller.donorListDataModel}"
+                                                             var="donor" selectionMode="single"
+                                                             rowKey="#{donor.id}"  rows="5" class="dataTable"
+                                                             paginator="true" paginatorPosition="bottom" editable="true"> 
+                                                    <p:ajax event="rowSelect" process="@this,tblDonorActionList" listener="#{donorcontroller.populateEmployee}"
+                                                            update=":frmDonorAction,:frmTop" />
+                                                    <p:column style="width:80px;">
+                                                        <f:facet name="header">
+                                                            <h:outputText value="No" />
+                                                        </f:facet>
+                                                        <h:outputText value="#{num+1}"/> 
+                                                    </p:column>
+                                                    <p:column>
+                                                        <f:facet name="header">
+                                                            <h:outputText value="Id"/>                                                        
+                                                        </f:facet>
+                                                        <h:outputText  value="#{donor.id}"   />
+                                                    </p:column>
+                                                    <p:column >
+                                                        <f:facet name="header">
+                                                            <h:outputText value="Full Name"/>
+                                                        </f:facet>
+                                                        <h:outputText value="#{donor.name} #{donor.lname}" />
+                                                    </p:column> 
+                                                    <p:column>
+                                                        <f:facet name="header">
+                                                            <h:outputText value="Phone Number"/>                                                        
+                                                        </f:facet>
+                                                        <h:outputText  value="#{donor.phonenumber}"   />
+                                                    </p:column>
+                                                    <p:column>
+                                                        <f:facet name="header">
+                                                            <h:outputText value="Age"/>                                                        
+                                                        </f:facet>
+                                                        <h:outputText  value="#{donor.age}"   />
+                                                    </p:column>
+                                                    <p:column>
+                                                        <f:facet name="header">
+                                                            <h:outputText value="Date of Birth"/>                                                        
+                                                        </f:facet>
+                                                        <h:outputText  value="#{donor.dob}"   />
+                                                    </p:column>
+                                                </p:dataTable>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>                   
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </h:panelGroup> 
+            <h:panelGroup id="pnlDonorAction"  rendered="#{donorcontroller.renderPnlCreateGatePass}">
+                <p:growl id="growl" showDetail="true" autoUpdate="true" severity="information"/>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="box box-info ">                      
+                            <div class="box-body ">
+                                <div class="box-header" >
+                                    <h3 class="box-title">
+                                        <h:outputLabel id="frmDonorAction"  value="Donor Information" />
+                                    </h3>                       
+                                </div>
+                                <div class="nav-tabs-custom">
+                                    <ul class="nav nav-tabs" id="myTab">
+                                        <li class="active"><a href="#tabPersonal" data-toggle="tab">Donor Information</a></li>
+                                        <li class="#{donorcontroller.tab}"><a href="#tabFamily"  data-toggle="#{donorcontroller.tabToggle}">Appoint For Donate</a></li>
+
+                                    </ul>
+                                    <div class="tab-content" id="maintab">
+                                        <div class="tab-pane active" id="tabPersonal">
+                                            <h:panelGroup id="inputDonorAction">
+                                                <section class="panel panel-default"  >
+                                                    <section class="panel-body" >  
+                                                        <div class="box-body col-sm-12 ">                                                
+                                                            <div class="col-md-6"> 
+                                                                <div class="col-md-12 textBoxMargin6px">
+                                                                    <div class="form-group form-horizontal required">                                                               
+                                                                        <h:outputLabel for="txtfname" value="First Name:" class="control-label col-sm-4" />                                            
+                                                                        <div class="col-sm-8 ">    
+                                                                            <p:inputText id="txtfname" value="#{donorcontroller.donor.name}" 
+                                                                                         required="true" requiredMessage="Please Enter First Name"/>
+                                                                            <p:message for="txtfname" display="icon"/>  
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-md-12 textBoxMargin6px">
+                                                                    <div class="form-group form-horizontal required">                                                               
+                                                                        <h:outputLabel for="txtlname" value="Last Name:" class="control-label col-sm-4" />                                            
+                                                                        <div class="col-sm-8 ">    
+                                                                            <p:inputText id="txtlname" value="#{donorcontroller.donor.lname}" 
+                                                                                         required="true" requiredMessage="Please Enter Your name"/>
+                                                                            <p:message for="txtlname" display="icon"/>  
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-12 textBoxMargin6px">
+                                                                    <div class="form-group form-horizontal required"> 
+                                                                        <h:outputLabel value="Gender:" class="control-label col-sm-4"/>                                           
+                                                                        <div class="col-sm-8">
+                                                                            <p:selectOneRadio id="txtSex" class="col-sm-6"
+                                                                                              value="#{donorcontroller.donor.sex}" required="true"
+                                                                                              requiredMessage="Please Enter Gender">
+                                                                                <f:selectItem itemLabel="Male" itemValue="Male" />
+                                                                                <f:selectItem itemLabel="Female" itemValue="Female" />                                                        
+                                                                            </p:selectOneRadio>
+                                                                            <p:message for="txtSex" display="icon"/>
+                                                                        </div>
+                                                                    </div> 
+                                                                </div>
+                                                                <div class="col-md-12 textBoxMargin6px">
+                                                                    <div class="form-group form-horizontal required">                                                                
+                                                                        <h:outputLabel for="txtDate" class="control-label col-sm-4" value="Brith Date:"/>    
+                                                                        <div class="col-sm-8">
+                                                                            <p:inputText id="txtDate" value="#{donorcontroller.donor.dob}"
+                                                                                         onclick="displayCalendar('frmAccount:txtDate', 'frmAccount:txtDate');"
+                                                                                         required="true" class="form-control" requiredMessage="Enter birth date"/> 
+                                                                            <p:message for="txtDate" display="icon"/>
+                                                                        </div>
+                                                                    </div> 
+                                                                </div>
+
+
+
+                                                                <div class="col-md-12 textBoxMargin6px">
+                                                                    <div class="form-group form-horizontal required"> 
+                                                                        <h:outputLabel value="Age" class="control-label col-sm-4"/> 
+
+                                                                        <div class="col-sm-8">
+                                                                            <p:inputText id="txtAge" value="#{donorcontroller.donor.age}"
+
+                                                                                         required="true" requiredMessage="Please Enter Your Age"/>
+                                                                            <p:message for="txtAge" display="icon"/>  
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-md-12 textBoxMargin6px">
+                                                                    <div class="form-group form-horizontal required"> 
+                                                                        <h:outputLabel value="Phone Number:" class="control-label col-sm-4"/> 
+                                                                        <div class="col-sm-8 textBoxMargin6px">
+                                                                            <p:inputMask id="txtsPhone" mask="(+251)9 99 99 99 999" requiredMessage="please enter Your phone number"
+                                                                                         value="#{donorcontroller.donor.phonenumber}"/>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="form-group form-group required form-horizontal">
+                                                                    <div class="col-sm-8">  
+                                                                        <div  height="300" width="300">
+                                                                            <span class="pull-right">
+                                                                                <p:graphicImage height="180" width="200" value="#{imageCon.image}" cache="false"
+                                                                                                rendered="#{employeeController.renderForGraphicsDb}">
+                                                                                    <f:param name="id" value="#{employeeController.employees.id}" />
+                                                                                </p:graphicImage>
+                                                                                <p:graphicImage height="180" width="200" url="../../../resources/image/im.jpg" 
+                                                                                                cache="false" rendered="#{employeeController.renderForGraphics}">
+                                                                                </p:graphicImage>                                                    
+                                                                                <br></br>
+                                                                            </span>
+                                                                            <div class="clearfix"></div>
+                                                                        </div> 
+                                                                    </div>
+                                                                    <h:form enctype="multipart/form-data" id="formEmployeeSeparation"  prependId="false" >
+                                                                        <section class="col-sm-5" >
+                                                                            <p:fileUpload mode="advanced" fileUploadListener="#{employeeController.handleFileUpload}" 
+                                                                                          multiple="true"   
+                                                                                          label="Browse &amp; Upload" 
+                                                                                          sizeLimit="1000000000000000"   
+                                                                                          auto="false"
+                                                                                          immediate="true"
+                                                                                          dragDropSupport="true"
+                                                                                          invalidFileMessage="This type of file is not valid"
+                                                                                          invalidSizeMessage="The size is not Allowed"
+                                                                                          allowTypes="/(\.|\/)(jpe?g|png|gif|JPG)$/" style="margin-left: 50px;width: 400px" />
+                                                                        </section>
+                                                                    </h:form> 
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </section>
+                                                </section>
+                                            </h:panelGroup>
+                                        </div>
+                                        <div class="tab-pane" id="tabFamily">
+                                            <h:panelGroup id="inputAppoint">
+                                                <section class="panel panel-default">
+                                                    <section class="panel-body" >                                                             
+                                                        <div class="col-sm-6 ">   
+                                                            <div class="col-md-12 textBoxMargin6px">
+                                                                <div class="col-md-12 textBoxMargin6px">
+                                                                    <div class="form-group form-horizontal required">                                                               
+                                                                        <h:outputLabel for="txtdname" value="Your Name:" class="control-label col-sm-4" />                                            
+                                                                        <div class="col-sm-8 ">    
+                                                                            <p:inputText id="txtdname" value="#{donorcontroller.donor.name}" 
+                                                                                         required="true" />
+                                                                            <p:message for="txtdname" display="icon"/>  
+                                                                        </div>
+                                                                    </div>
+                                                                </div> 
+                                                            </div>  
+                                                            <div class="col-md-12 textBoxMargin6px">
+                                                                <div class="form-group form-horizontal required">
+                                                                    <h:outputLabel value="Blood Group:" class="col-md-4 control-label" />
+                                                                    <div class="col-md-8">
+                                                                        <p:selectOneMenu id="donorBloodGroup" value="#{donorcontroller.stock}" required="true"
+                                                                                         converter="entConverter" valueChangeListener="#{donorcontroller.vcl_Stock}" style="width:100%"
+                                                                                         requiredMessage="Please select Your blood type"
+                                                                                         effect="fade"  filter="true" filterMatchMode="startsWith" >
+                                                                            <f:selectItem itemLabel="--- Select Your Blood Group---" itemValue=""/>
+                                                                            <f:selectItems value="#{donorcontroller.stocklist}" var="evaCriteria"
+                                                                                           itemValue="#{evaCriteria}" itemLabel="#{evaCriteria.bloodgroup}"/>
+                                                                        </p:selectOneMenu>
+                                                                        <p:message for="donorBloodGroup" display="icon"/>  
+                                                                    </div>
+                                                                </div>  
+                                                            </div>
+
+                                                            <div class="col-md-12 textBoxMargin6px">
+                                                                <div class="form-group form-horizontal required">                                                                
+                                                                    <h:outputLabel for="txtAdate" class="control-label col-sm-4" value="Appointed Date:"/>    
+                                                                    <div class="col-sm-8">
+                                                                        <p:inputText id="txtAdate" value="#{donorcontroller.donorappoint.appointDate}"
+                                                                                     onclick="displayCalendar('frmDonorAction:txtAdate', 'frmDonorAction:txtAdate');"
+                                                                                     required="true" class="form-control" requiredMessage="Enter Appointed Date"/> 
+                                                                        <p:message for="txtAdate" display="icon"/>
+                                                                    </div>
+                                                                </div> 
+                                                            </div>
+                                                            <div class="col-md-12 textBoxMargin6px">
+                                                                <div class="form-group form-horizontal required">
+                                                                    <h:outputLabel value="Blood Bank center:" class="col-md-4 control-label" />
+                                                                    <div class="col-md-8">
+                                                                        <p:selectOneMenu id="donateCenter" value="#{donorcontroller.address}" required="true"
+                                                                                         converter="entConverter" valueChangeListener="#{donorcontroller.vcl_Address}" style="width:100%"
+                                                                                         requiredMessage="Please select center you want donate"
+                                                                                         effect="fade"  filter="true" filterMatchMode="startsWith" >
+                                                                            <f:selectItem itemLabel="--- Select center---" itemValue=""/>
+                                                                            <f:selectItems value="#{donorcontroller.addresslist}" var="evaCriteria"
+                                                                                           itemValue="#{evaCriteria}" itemLabel="#{evaCriteria.addressName}"/>
+                                                                        </p:selectOneMenu>
+                                                                        <p:message for="donateCenter" display="icon"/>  
+                                                                    </div>
+                                                                </div>  
+                                                            </div>
+
+                                                            <div class="col-sm-12 textBoxMargin6px">
+                                                                <div class="form-group form-horizontal required">   
+                                                                    <h:outputLabel  class="control-label col-sm-4" value="Remark:"/>
+                                                                    <div class="col-sm-8">                                
+                                                                        <p:inputText   id="txtRemark" class="form-control"  requiredMessage="Please Enter your suggestion"
+
+                                                                                       value="#{donorcontroller.donorappoint.remark}" />       
+                                                                        <p:message for="txtRemark" display="icon"/> 
+                                                                    </div>  
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-12 form-horizontal">
+                                                                <div class="col-sm-4">                                                              
+                                                                </div>                                                                    
+                                                                <div class="col-sm-6">
+                                                                    <center>
+                                                                        <p:commandButton class="btn  btn-block btn-primary col-sm-4 " value="#{donorcontroller.confirm}" 
+
+                                                                                         process="@this,:frmDonorAction:inputAppoint"
+                                                                                         update="@this,:frmDonorAction:inputAppoint,:frmDonorAction:tblDonorAppoint"
+                                                                                         action="#{donorcontroller.save}"/>
+                                                                    </center>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </section>
+                                                </section>
+                                            </h:panelGroup>
+                                            <p:dataTable id="tblDonorAppoint"  var="dappoint" value="#{donorcontroller.donorappointDataModel}"                                       
+                                                         rowIndexVar="num"  class="dataTable" 
+                                                         rows="5" paginator="true" paginatorPosition="bottom" editable="true">   
+                                                <p:ajax event="rowSelect" process="@this,tblDonorAppoint" 
+                                                        update=":frmDonorAction:inputAppoint"/>
+                                                <p:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="No"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{num+1}"/>
+                                                </p:column>    
+                                                <p:column >
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Appointed Date "/>                                                        
+                                                    </f:facet>
+                                                    <h:outputText value="#{dappoint.appointDate}"/>
+                                                </p:column> 
+                                                <p:column >
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Blood Group"/>                                                        
+                                                    </f:facet>
+                                                    <h:outputText value="#{dappoint.bloodgroup.bloodgroup}"/>
+                                                </p:column>
+                                                <p:column headerText="Center" >
+
+                                                    <h:outputText value="#{dappoint.center.addressName}"/>
+                                                </p:column>
+
+                                                <p:column headerText="Delete">                                              
+                                                    <p:commandLink action="#{donorcontroller.delete()}" style="width: 50px;"
+                                                                   process="@this,tblDonorAppoint" update=":frmDonorAction:tblDonorAppoint" value="Del" class="ui-icon ui-icon-trash">
+                                                        <p:confirm header="Confirmation" message="Are You sure?" icon="ui-icon-alert"/>
+                                                    </p:commandLink>
+                                                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade"> 
+                                                        <p:commandButton value="Yes" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" style="margin-right: 5px !important;"/>
+                                                        <p:commandButton value="No" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
+                                                    </p:confirmDialog>
+                                                </p:column>
+                                                <p:column headerText="Edit">                                              
+                                                    <p:commandLink actionListener="#{donorcontroller.update()}" style="width: 50px;"
+                                                                   process=":frmDonorAction:tblDonorAppoint"  update=":frmDonorAction:inputAppoint" value="Edit">
+                                                    </p:commandLink>
+                                                </p:column>
+                                            </p:dataTable>
+                                        </div>
+                                    </div>
+                                    <h:panelGroup id="pnlSave">
+                                        <section class="panel panel-default"  >
+                                            <section class="panel-body" > 
+                                                <div class="col-sm-12 textBoxMargin6px">
+                                                    <div class="col-sm-6">
+                                                        <div class="col-sm-12 form-horizontal">
+                                                            <div class="col-sm-4">
+                                                            </div>
+                                                            <div class="col-sm-4">
+                                                                <p:commandButton class="btn  btn-block btn-primary col-lg-4 " 
+                                                                                 value="#{donorcontroller.saveOrUpdateButton}"
+                                                                                 id="btnSave" process="@this,inputDonorAction,:frmDonorAction:tblDonorAppoint" action="#{donorcontroller.create}"
+                                                                                 update="inputDonorAction,:frmDonorAction,:frmDonorAction:tblDonorAppoint"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </section>
+                                        </section>
+                                    </h:panelGroup>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </h:panelGroup>
+        </h:form>
+    </ui:define>
+</ui:composition>  
+

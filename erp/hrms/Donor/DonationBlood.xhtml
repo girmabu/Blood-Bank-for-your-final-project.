@@ -1,0 +1,761 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    template="../../../resources/templates/templateHome.xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <ui:define name="navigaion_content">
+        <li class="header">MAIN NAVIGATION</li> 
+        <li><a href="#"><i class="fa fa-user"></i> <span>Settings</span></a></li>  
+        <li class="header">USER NAVIGATION</li> 
+       
+        <li><a href="Reg.xhtml"><i class="fa fa-info"> </i> <span>User Navigation</span></a></li>  
+
+    </ui:define>
+    <ui:define name="contents">
+        <h:form id="frmTop"> 
+            <p:toolbar style="background-color:white;border-color: white ; margin-bottom: 10px">
+                <f:facet name="left">
+                    <span class="ui-separator">
+                        <div style="color:blueviolet">
+                            Logged as: #{logged.loggedName.firstName}  #{logged.loggedLname.middleName} #{logged.loggedSurname.lastName}
+                        </div>
+                    </span> 
+
+                </f:facet>
+                <f:facet name="right">
+                    <p:commandButton validateClient="true" action="#{donorcontroller.createNewGatePassInfo()}"
+                                     icon="#{donorcontroller.icone}"  style="background-color: white" 
+                                     process="@this" update="@this,:frmDonation" 
+                                     title="#{donorcontroller.createOrSearchBundle}"/>
+                    <span class="ui-separator">
+                        <span class="ui-icon ui-icon-grip-dotted-vertical"/>
+                    </span> 
+                    <a href="DonationBlood.xhtml"><i class="fa fa-fw fa-refresh" title="Refresh"></i></a>
+                    <span class="ui-separator">
+                        <span class="ui-icon ui-icon-grip-dotted-vertical"/>
+                    </span>
+
+                    <a href="../../../DonorLogin.xhtml"><i class="fa fa-fw fa-dashboard" title="Dashboard"></i></a>
+                    <span class="ui-separator">
+                        <span class="ui-icon ui-icon-grip-dotted-vertical"/>
+                    </span>
+                </f:facet>
+            </p:toolbar>
+        </h:form>  
+        <h:form id="frmDonation">
+            <h:panelGroup style="border: 0px; background-color: transparent" id="pnlSearch" rendered="#{donorcontroller.renderPnlManPage}">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="box box-info ">                      
+                            <div class="box-body ">
+                                <div class="box-body ">
+                                    <div class="box-header" >
+                                        <h3 class="box-title">
+                                            <h:outputLabel id="frmEmployeeHeader"/>
+                                        </h3>                       
+                                    </div>
+                                    <div class="col-md-12" >                                        
+                                        <div class="col-sm-12">
+                                            <div class="col-sm-6" >                                           
+                                                <div class="form-horizontal col-md-12">
+                                                    <div class="form-group">
+                                                        <h:outputLabel for="txtSrchName" class="control-label col-sm-4" value="First Name:"/>                                                          
+                                                        <div class="col-sm-8">  
+                                                            <p:inputText id="txtSrchName" value="#{donorcontroller.donor.name}" />                                                                                                                                                    
+                                                            <p:message for="txtSrchName" display="icon"/>                                                          
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-horizontal col-md-12">
+                                                    <div class="form-group">
+                                                        <div class="col-sm-4">                                                            
+                                                        </div>                                                          
+                                                        <div class="col-sm-3 ">
+                                                            <p:commandButton class="btn  btn-block btn-primary col-lg-4"  process="@this,txtSrchName"                                                                    
+                                                                             value="Search" action="#{donorcontroller.findByFname()}"
+                                                                             id="btnSearch" update=":frmDonation:tblDonorList" />
+                                                        </div>
+                                                    </div>
+                                                </div> 
+                                            </div>
+                                        </div>                              
+                                    </div> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>                
+            </h:panelGroup>
+            <h:panelGroup style="border: 0px; background-color: transparent" id="pnlDtSearch" rendered="#{donorcontroller.renderPnlManPage}">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="box box-info ">                      
+                            <div class="box-body ">
+                                <div class="box-body ">
+                                    <div class="col-md-12" >  
+                                        <div class="col-md-12" style="margin-top: 30px;">
+                                            <div class="form-group">
+                                                <p:dataTable id="tblDonorList"  value="#{donorcontroller.donorListDataModel}"
+                                                             var="donor" selectionMode="single"  
+                                                             rowKey="#{donor.id}"  rows="5" class="dataTable"
+                                                             paginator="true" paginatorPosition="bottom" editable="true"> 
+                                                    <p:ajax event="rowSelect" process="@this,tblDonorList" listener="#{donorcontroller.populateEmployee}"
+                                                            update=":frmDonation,:frmTop" />
+                                                    <p:column style="width:80px;">
+                                                        <f:facet name="header">
+                                                            <h:outputText value="No" />
+                                                        </f:facet>
+                                                        <h:outputText value="#{num+1}"/> 
+                                                    </p:column>
+                                                    <p:column>
+                                                        <f:facet name="header">
+                                                            <h:outputText value="Donor Id"/>                                                        
+                                                        </f:facet>
+                                                        <h:outputText  value="#{donor.id}"   />
+                                                    </p:column>
+                                                    <p:column>
+                                                        <f:facet name="header">
+                                                            <h:outputText value="Phone number"/>                                                        
+                                                        </f:facet>
+                                                        <h:outputText  value="#{donor.phonenumber}"   />
+                                                    </p:column>
+                                                    <p:column >
+                                                        <f:facet name="header">
+                                                            <h:outputText value="Full Name"/>
+                                                        </f:facet>
+                                                        <h:outputText value="#{donor.name} #{donor.lname} #{donor.surname}" />
+                                                    </p:column> 
+                                                    <p:column>
+                                                        <f:facet name="header">
+                                                            <h:outputText value="Birth Date"/>                                                        
+                                                        </f:facet>
+                                                        <h:outputText  value="#{donor.dob}"   />
+                                                    </p:column>
+                                                </p:dataTable>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>                   
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </h:panelGroup> 
+            <h:panelGroup id="pnlDonor"  rendered="#{donorcontroller.renderPnlCreateGatePass}">
+                <p:growl id="growl" showDetail="true" autoUpdate="true" severity="information"/>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="box box-info ">                      
+                            <div class="box-body ">
+                                <div class="box-header" >
+                                    <h3 class="box-title">
+                                        <h:outputLabel id="frmDonation"  value="Donor Registration " />
+                                    </h3>                       
+                                </div>
+                                <div class="nav-tabs-custom">
+                                    <ul class="nav nav-tabs" id="myTab">
+                                        <li class="active"><a href="#tabPersonal" data-toggle="tab">Donor Information</a></li>
+                                        <li class="#{donorcontroller.tab}"><a href="#tabFamily"  data-toggle="#{donorcontroller.tabToggle}">Donate</a></li>
+                                        <li class="#{donorcontroller.tab}"><a href="#tabEducation"  data-toggle="#{donorcontroller.tabToggle}">Discard</a></li>
+                                    </ul>
+                                    <div class="tab-content" id="maintab">
+                                        <div class="tab-pane active" id="tabPersonal">
+                                            <h:panelGroup id="inputDonor">
+                                                <p:growl id="growl2" showDetail="true" autoUpdate="true" severity="information"/>
+                                                <section class="panel panel-default"  >
+                                                    <section class="panel-body" >   
+                                                        <div class="box-body col-sm-12 ">                                                
+                                                            <div class="col-md-6">
+                                                                <div class="col-md-12 textBoxMargin6px">
+                                                                    <div class="form-group form-horizontal required">                                                               
+                                                                        <h:outputLabel for="txtfname" value="First Name:" class="control-label col-sm-4" />                                            
+                                                                        <div class="col-sm-8 ">    
+                                                                            <p:inputText id="txtfname" value="#{donorcontroller.donor.name}" 
+                                                                                         required="true" requiredMessage="Please Enter First Name"/>
+                                                                            <p:message for="txtfname" display="icon"/>  
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-12 textBoxMargin6px">
+                                                                    <div class="form-group form-horizontal required"> 
+                                                                        <h:outputLabel for="txtMName" value="Middle Name:" class="control-label col-sm-4"/>
+                                                                        <div class="col-sm-8" >  
+                                                                            <p:inputText id="txtMName" value="#{donorcontroller.donor.lname}"
+                                                                                         required="true" requiredMessage="Please Enter Middle Name" class="col-sm-4"/>
+                                                                            <p:message for="txtMName" display="icon"/>     
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-12 textBoxMargin6px">
+                                                                    <div class="form-group form-horizontal required"> 
+                                                                        <h:outputLabel value="Last Name:" class="control-label col-sm-4"/>
+                                                                        <div class="col-sm-8" >  
+                                                                            <p:inputText id="txtLName" value="#{donorcontroller.donor.surname}" 
+                                                                                         class="col-sm-4" required="true" requiredMessage="Please Enter Last Name"/>
+                                                                            <p:message for="txtLName" display="icon"/>  
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-12 textBoxMargin6px">
+                                                                    <div class="form-group form-horizontal required"> 
+                                                                        <h:outputLabel value="Gender:" class="control-label col-sm-4"/>                                           
+                                                                        <div class="col-sm-8">
+                                                                            <p:selectOneRadio id="txtSex" class="col-sm-6"
+                                                                                              value="#{donorcontroller.donor.sex}" required="true"
+                                                                                              requiredMessage="Please Enter Gender">
+                                                                                <f:selectItem itemLabel="Male" itemValue="Male" />
+                                                                                <f:selectItem itemLabel="Female" itemValue="Female" />                                                        
+                                                                            </p:selectOneRadio>
+                                                                            <p:message for="txtSex" display="icon"/>
+                                                                        </div>
+                                                                    </div> 
+                                                                </div>
+                                                                <div class="col-md-12 textBoxMargin6px">
+                                                                    <div class="form-group form-horizontal required"> 
+                                                                        <h:outputLabel value="Age:" class="control-label col-sm-4"/>
+                                                                        <div class="col-sm-8">
+                                                                            <p:inputText id="txtAge" value="#{donorcontroller.donor.age}"
+                                                                                         required="true" requiredMessage="Please Enter Age"/>
+                                                                            <p:message for="txtAge" display="icon"/>  
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-12 textBoxMargin6px">
+                                                                    <div class="form-group form-horizontal required">                                                                
+                                                                        <h:outputLabel for="txtDate" class="control-label col-sm-4" value="Brith Date:"/>    
+                                                                        <div class="col-sm-8">
+                                                                            <p:inputText id="txtDate" value="#{donorcontroller.donor.dob}"
+                                                                                         onclick="displayCalendar('frmDonation:txtDate', 'frmDonation:txtDate');"
+                                                                                         required="true" class="form-control" requiredMessage="Enter Birth date"/> 
+                                                                            <p:message for="txtDate" display="icon"/>
+                                                                        </div>
+                                                                    </div> 
+                                                                </div>
+                                                                <div class="col-md-12 textBoxMargin6px">
+                                                                    <div class="form-group form-horizontal required">   
+                                                                        <h:outputLabel  class="control-label col-sm-4" value="Mobile Number:"/>
+                                                                        <div class="col-sm-8">                                
+                                                                            <p:inputMask   id="txtMobileNumberA" class="form-control" mask="(+251) 999-999999" required="true"
+                                                                                           value="#{donorcontroller.donor.phonenumber}" />     
+                                                                            <p:message for="txtMobileNumberA" display="icon"/> 
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-12 textBoxMargin6px">
+                                                                    <div class="form-group form-horizontal"> 
+                                                                        <h:outputLabel value="Email:" class="control-label col-sm-4"/>
+                                                                        <div class="col-sm-8">
+                                                                            <p:inputText id="txtEmail" value="#{donorcontroller.donor.email}"
+                                                                                         requiredMessage="Please Enter Email"/>
+                                                                            <p:message for="txtEmail" display="icon"/>  
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-12 textBoxMargin6px">
+                                                                    <div class="form-group form-horizontal"> 
+                                                                        <h:outputLabel value="Title" class="control-label col-sm-4"/>
+                                                                        <div class="col-sm-8">
+                                                                            <p:inputText id="txtTele" value="#{donorcontroller.donor.title}"
+                                                                                         requiredMessage="Please Enter Title"/>
+                                                                            <p:message for="txtTele" display="icon"/>  
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6 "> 
+                                                                <div class="col-md-12 textBoxMargin6px">
+                                                                    <div class="form-group form-horizontal"> 
+                                                                        <h:outputLabel value="City" class="control-label col-sm-4"/>
+                                                                        <div class="col-sm-8">
+                                                                            <p:inputText id="txtCity" value="#{donorcontroller.donor.city}"
+                                                                                         requiredMessage="Please Enter City"/>
+                                                                            <p:message for="txtCity" display="icon"/>  
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-12 textBoxMargin6px">
+                                                                    <div class="form-group form-horizontal"> 
+                                                                        <h:outputLabel value="Region:" class="control-label col-sm-4"/>
+                                                                        <div class="col-sm-8">
+                                                                            <p:inputText id="txtRegion" value="#{donorcontroller.donor.region}"
+                                                                                         requiredMessage="Please Enter Region"/>
+                                                                            <p:message for="txtRegion" display="icon"/>  
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-12 textBoxMargin6px">
+                                                                    <div class="form-group form-horizontal"> 
+                                                                        <h:outputLabel value="Zone:" class="control-label col-sm-4"/>
+                                                                        <div class="col-sm-8">
+                                                                            <p:inputText id="txtZone" value="#{donorcontroller.donor.zone}"
+                                                                                         requiredMessage="Please Enter City"/>
+                                                                            <p:message for="txtZone" display="icon"/>  
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-12 textBoxMargin6px">
+                                                                    <div class="form-group form-horizontal"> 
+                                                                        <h:outputLabel value="Woreda:" class="control-label col-sm-4"/>
+                                                                        <div class="col-sm-8">
+                                                                            <p:inputText id="txtWoreda" value="#{donorcontroller.donor.woreda}"
+                                                                                         requiredMessage="Please Enter Woreda"/>
+                                                                            <p:message for="txtWoreda" display="icon"/>  
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </section>
+                                                </section>
+                                            </h:panelGroup>
+                                        </div>
+                                        <div class="tab-pane" id="tabFamily">
+                                            <h:panelGroup id="pnlInputDonate">
+                                                <div class="fa fa-user"> Dear #{donorcontroller.donor.name} #{donorcontroller.donor.lname} You donate 
+                                                    <p style="font-weight: bolder; color:red;">
+                                                        #{donorcontroller.size}</p> times</div>
+                                                <section class="panel panel-default">
+                                                    <section class="panel-body" >                                                               
+                                                        <div class="col-md-12">
+                                                            <div class="col-sm-6 ">  
+                                                                <div class="col-sm-12 textBoxMargin6px">
+                                                                    <div class="form-group form-horizontal required">   
+                                                                        <h:outputLabel  class="control-label col-sm-4" value="First Name:"/>
+                                                                        <div class="col-sm-8">                                
+                                                                            <p:inputText   id="txtHname" class="form-control"  required="true" requiredMessage="Please Enter Donor Name"
+                                                                                           validator="#{validatorManagedBean.Text}"
+                                                                                           value="#{donorcontroller.donor.name}" />       
+                                                                            <p:message for="txtHname" display="icon"/> 
+                                                                        </div>  
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-md-12 textBoxMargin6px">
+                                                                    <div class="form-group form-horizontal required">                                                                
+                                                                        <h:outputLabel for="txtDonationDate" class="control-label col-sm-4" value="Donation Date:"/>    
+                                                                        <div class="col-sm-8">
+                                                                            <p:inputText id="txtDonationDate" value="#{donorcontroller.donorHistroy.donationdate}"
+                                                                                         onclick="displayCalendar('frmDonation:txtDonationDate', 'frmDonation:txtDonationDate');"
+                                                                                         required="true" class="form-control" requiredMessage="Enter Donation Date"/> 
+                                                                            <p:message for="txtDonationDate" display="icon"/>
+                                                                        </div>
+                                                                    </div> 
+                                                                </div>
+                                                                <div class="col-sm-12 textBoxMargin6px">
+                                                                    <div class="form-group form-horizontal required">   
+                                                                        <h:outputLabel  class="control-label col-sm-4" value="Packet No:"/>
+                                                                        <div class="col-sm-8">                                
+                                                                            <p:inputText   id="txtPacketN" class="form-control"  requiredMessage="Please Enter Packet Number"
+
+                                                                                           value="#{donorcontroller.donorHistroy.packNo}" />       
+                                                                            <p:message for="txtPacketN" display="icon"/> 
+                                                                        </div>  
+                                                                    </div> 
+                                                                </div>
+                                                                <div class="col-sm-12 textBoxMargin6px">
+                                                                    <div class="form-group form-horizontal required">   
+                                                                        <h:outputLabel  class="control-label col-sm-4" value="Weight(Wt):"/>
+                                                                        <div class="col-sm-8">                                
+                                                                            <p:inputText   id="txtWt" class="form-control"  requiredMessage="Please Enter Weight:"
+                                                                                           required="true"
+                                                                                           value="#{donorcontroller.donorHistroy.wt}" />       
+                                                                            <p:message for="txtWt" display="icon"/> 
+                                                                        </div>  
+                                                                    </div> 
+                                                                </div>
+                                                                <div class="col-sm-12 textBoxMargin6px">
+                                                                    <div class="form-group form-horizontal required">   
+                                                                        <h:outputLabel  class="control-label col-sm-4" value="B/P:"/>
+                                                                        <div class="col-sm-8">                                
+                                                                            <p:inputText   id="txtBp" class="form-control"  requiredMessage="Please Enter B/P"
+                                                                                           required="true"
+                                                                                           value="#{donorcontroller.donorHistroy.bp}" />       
+                                                                            <p:message for="txtBp" display="icon"/> 
+                                                                        </div>  
+                                                                    </div> 
+                                                                </div>
+                                                                <div class="col-sm-12 textBoxMargin6px">
+                                                                    <div class="form-group form-horizontal required">   
+                                                                        <h:outputLabel  class="control-label col-sm-4" value="Vol:"/>
+                                                                        <div class="col-sm-8">                                
+                                                                            <p:inputText   id="txtVol" class="form-control"  requiredMessage="Please Enter Vol"
+                                                                                           required="true"
+                                                                                           value="#{donorcontroller.donorHistroy.vol}" />       
+                                                                            <p:message for="txtVol" display="icon"/> 
+                                                                        </div>  
+                                                                    </div> 
+                                                                </div>
+                                                                <div class="col-sm-12 textBoxMargin6px">
+                                                                    <div class="form-group form-horizontal required">   
+                                                                        <h:outputLabel  class="control-label col-sm-4" value="Screened By:"/>
+                                                                        <div class="col-sm-8">                                
+                                                                            <p:inputText   id="txtScreenedBy" class="form-control"  requiredMessage="Please Enter screenedBy"
+                                                                                           required="true"
+                                                                                           value="#{donorcontroller.donorHistroy.screenedBy}" />       
+                                                                            <p:message for="txtScreenedBy" display="icon"/> 
+                                                                        </div>  
+                                                                    </div> 
+                                                                </div>
+                                                                <div class="col-md-12 textBoxMargin6px">
+                                                                    <div class="form-group form-horizontal required"> 
+                                                                        <h:outputLabel value="Hgb" class="control-label col-sm-4"/>                                           
+                                                                        <div class="col-sm-8">
+                                                                            <p:selectOneRadio id="txtHgb" class="col-sm-6"
+                                                                                              value="#{donorcontroller.donorHistroy.hgb}" required="true"
+                                                                                              requiredMessage="Please Enter Hgb">
+                                                                                <f:selectItem itemLabel="Yes" itemValue="Yes" />
+                                                                                <f:selectItem itemLabel="No" itemValue="No" />                                                        
+                                                                            </p:selectOneRadio>
+                                                                            <p:message for="txtHgb" display="icon"/>
+                                                                        </div>
+                                                                    </div> 
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="col-sm-12 textBoxMargin6px">
+                                                                    <div class="form-group form-horizontal required">   
+                                                                        <h:outputLabel  class="control-label col-sm-4" value="Type of Donation:"/>
+                                                                        <div class="col-sm-8">                                
+                                                                            <p:inputText   id="txtTypeDonation" class="form-control"  requiredMessage="Please Enter Type of Donation"
+                                                                                           required="true"
+                                                                                           value="#{donorcontroller.donorHistroy.donationType}" />       
+                                                                            <p:message for="txtTypeDonation" display="icon"/> 
+                                                                        </div>  
+                                                                    </div> 
+                                                                </div>
+                                                                <div class="col-sm-12 textBoxMargin6px">
+                                                                    <div class="form-group form-horizontal ">   
+                                                                        <h:outputLabel  class="control-label col-sm-4" value="Bleed Time:"/>
+                                                                        <div class="col-sm-8">                                
+                                                                            <p:inputText   id="txtBleedTime" class="form-control"  requiredMessage="Please Enter Bleeding Time"
+
+                                                                                           value="#{donorcontroller.donorHistroy.bleedTime}" />       
+                                                                            <p:message for="txtBleedTime" display="icon"/> 
+                                                                        </div>  
+                                                                    </div> 
+                                                                </div>
+                                                                <div class="col-sm-12 textBoxMargin6px">
+                                                                    <div class="form-group form-horizontal ">   
+                                                                        <h:outputLabel  class="control-label col-sm-4" value="ABO $ RH:"/>
+                                                                        <div class="col-sm-8">                                
+                                                                            <p:inputText   id="txtAborh" class="form-control"  requiredMessage="Please Enter Ao/Rh"
+
+                                                                                           value="#{donorcontroller.donorHistroy.aboRh}" />       
+                                                                            <p:message for="txtAborh" display="icon"/> 
+                                                                        </div>  
+                                                                    </div> 
+                                                                </div>
+                                                                <div class="col-sm-12 textBoxMargin6px">
+                                                                    <div class="form-group form-horizontal">   
+                                                                        <h:outputLabel  class="control-label col-sm-4" value="Checked By:"/>
+                                                                        <div class="col-sm-8">                                
+                                                                            <p:inputText   id="txtChecked" class="form-control"  requiredMessage="Please Enter Checked By"
+
+                                                                                           value="#{donorcontroller.donorHistroy.checkedBy}" />       
+                                                                            <p:message for="txtChecked" display="icon"/> 
+                                                                        </div>  
+                                                                    </div> 
+                                                                </div>
+                                                                <div class="col-sm-12 textBoxMargin6px">
+                                                                    <div class="form-group form-horizontal ">   
+                                                                        <h:outputLabel  class="control-label col-sm-4" value="Remark:"/>
+                                                                        <div class="col-sm-8">                                
+                                                                            <p:inputTextarea   id="txtRemark" class="form-control"  requiredMessage="Please Enter Remark"
+
+                                                                                               value="#{donorcontroller.donorHistroy.remark}" />       
+                                                                            <p:message for="txtRemark" display="icon"/> 
+                                                                        </div>  
+                                                                    </div> 
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-12">
+                                                                <div class="col-md-6">
+                                                                    <p:separator></p:separator>
+                                                                    <div class="col-sm-12 form-horizontal">
+                                                                        <div class="col-sm-4">                                                              
+                                                                        </div>                                                                    
+                                                                        <div class="col-sm-4">
+                                                                            <center>
+                                                                                <p:commandButton class="btn  btn-block btn-primary col-sm-4 " value="Add Histroy" 
+
+                                                                                                 process="@this,:frmDonation:pnlInputDonate"
+                                                                                                 update="@this,:frmDonation:pnlInputDonate,:frmDonation:tblDonorHistory"
+                                                                                                 action="#{donorcontroller.save()}"/>
+                                                                            </center>
+                                                                            <p:separator></p:separator>
+                                                                        </div>
+                                                                        <div class="col-sm-4">
+                                                                            <center>
+                                                                                <p:commandButton class="btn  btn-block btn-primary col-sm-4 " value="Clear" 
+
+                                                                                                 process="@this"
+                                                                                                 update="@this"
+                                                                                                 action="#{donorcontroller.clearHistory()}"/>
+                                                                            </center>
+                                                                        </div>
+                                                                    </div>
+                                                                </div> 
+                                                            </div>
+                                                            <p:separator></p:separator>
+                                                        </div>                                                      
+                                                    </section>
+                                                </section>
+                                            </h:panelGroup>
+                                            <p:dataTable id="tblDonorHistory"  var="history" value="#{donorcontroller.donorHistoryDataModel}"                                       
+                                                         rowIndexVar="num" widgetVar="tblDonorHistory" class="dataTable" 
+                                                         rows="10" paginator="true" paginatorPosition="bottom" editable="true">   
+                                                <p:ajax event="rowSelect" process="@this,tblDonorHistory" 
+                                                        update=":frmDonation:pnlInputDonate"/>
+                                                <p:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="No"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{num+1}"/>
+                                                </p:column>    
+                                                <p:column >
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Date"/>                                                        
+                                                    </f:facet>
+                                                    <h:outputText value="#{history.donationdate}"/>
+                                                </p:column> 
+                                                <p:column >
+                                                    <f:facet name="header">
+                                                        <h:outputText value="pack No"/>                                                        
+                                                    </f:facet>
+                                                    <h:outputText value="#{history.packNo}"/>
+                                                </p:column>
+                                                <p:column >
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Wt"/>                                                        
+                                                    </f:facet>
+                                                    <h:outputText value="#{history.wt}"/>
+                                                </p:column>
+                                                <p:column >
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Vol"/>                                                        
+                                                    </f:facet>
+                                                    <h:outputText value="#{history.vol}"/>
+                                                </p:column>
+                                                <p:column >
+                                                    <f:facet name="header">
+                                                        <h:outputText value="B/P"/>                                                        
+                                                    </f:facet>
+                                                    <h:outputText value="#{history.bp}"/>
+                                                </p:column>
+                                                <p:column >
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Screened By"/>                                                        
+                                                    </f:facet>
+                                                    <h:outputText value="#{history.screenedBy}"/>
+                                                </p:column>
+                                                <p:column >
+                                                    <f:facet name="header">
+                                                        <h:outputText value="ABO/Rh"/>                                                        
+                                                    </f:facet>
+                                                    <h:outputText value="#{history.aboRh}"/>
+                                                </p:column>
+                                                <p:column headerText="Delete">                                              
+                                                    <p:commandLink action="#{donorcontroller.delete()}" style="width: 50px;"
+                                                                   process="@this,tblDonorHistory" update=":frmDonation:tblDonorHistory" value="Del" class="ui-icon ui-icon-trash">
+                                                        <p:confirm header="Confirmation" message="Are You sure?" icon="ui-icon-alert"/>
+                                                    </p:commandLink>
+                                                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade"> 
+                                                        <p:commandButton value="Yes" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" style="margin-right: 5px !important;"/>
+                                                        <p:commandButton value="No" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
+                                                    </p:confirmDialog>
+                                                </p:column>
+
+                                                <p:column headerText="Edit">                                              
+                                                    <p:commandLink actionListener="#{donorcontroller.update()}" style="width: 50px;"
+                                                                   process=":frmDonation:tblDonorHistory"  update=":frmDonation:pnlInputDonate" value="Edit">
+                                                    </p:commandLink>
+                                                </p:column>
+                                            </p:dataTable>
+                                        </div>
+                                        <div class="tab-pane" id="tabEducation">
+                                            <h:panelGroup id="inputDiscard">
+                                                <section class="panel panel-default">
+                                                    <section class="panel-body" >   
+                                                        <div class="box-body col-sm-12 ">                                                
+                                                            <div class="col-md-6"> 
+                                                                <div class="form-group form-horizontal required">   
+                                                                    <h:outputLabel   class="control-label col-sm-4" value="First Name"/>
+                                                                    <div class="col-sm-8">                                
+                                                                        <p:inputText    id="txtDiscaredeName" class="form-control" required="true"
+                                                                                        validator="#{validatorManagedBean.Text}" requiredMessage="Please Enter Discareded Name"
+                                                                                        value="#{donorcontroller.donor.name}" />
+                                                                        <p:message for="txtDiscaredeName" display="icon"/> 
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-12 textBoxMargin6px">
+                                                                    <div class="form-group form-horizontal required">
+                                                                        <h:outputLabel value="Reason:" class="col-md-4 control-label" />
+                                                                        <div class="col-md-6">
+                                                                            <p:selectOneMenu id="txtReasonDiscard" value="#{donorcontroller.discard.reason}" required="true"
+                                                                                             style="width:100%;"
+                                                                                             requiredMessage="Please select Reason why you discard"
+                                                                                             effect="fade"  filter="true" filterMatchMode="startsWith" >
+                                                                                <f:selectItem itemLabel="--- Select one---" itemValue=""/>
+                                                                                <f:selectItem itemLabel="Hiv" itemValue="Hiv"/>
+                                                                                <f:selectItem itemLabel="Cancer" itemValue="Cancer"/>
+
+                                                                            </p:selectOneMenu>
+                                                                            <p:message for="txtReasonDiscard" display="icon"/>  
+                                                                        </div>
+                                                                    </div>  
+                                                                </div> 
+                                                                <div class="col-md-12 textBoxMargin6px">
+                                                                    <div class="form-group form-horizontal required">   
+                                                                        <h:outputLabel   class="control-label col-sm-4" value="Venue"/>
+                                                                        <div class="col-sm-8">                                
+                                                                            <p:inputText    id="txtVenue" class="form-control" required="true"
+                                                                                            validator="#{validatorManagedBean.Text}" requiredMessage="Please Enter Discareded Venue"
+                                                                                            value="#{donorcontroller.discard.venue}" />
+                                                                            <p:message for="txtVenue" display="icon"/> 
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-12 textBoxMargin6px">
+                                                                    <div class="form-group form-horizontal required">   
+                                                                        <h:outputLabel   class="control-label col-sm-4" value="Screened By"/>
+                                                                        <div class="col-sm-8">                                
+                                                                            <p:inputText    id="txtScreened" class="form-control" required="true"
+                                                                                            validator="#{validatorManagedBean.Text}" requiredMessage="Please Enter Screened By:"
+                                                                                            value="#{donorcontroller.discard.screenedBy}" />
+                                                                            <p:message for="txtScreened" display="icon"/> 
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-12 textBoxMargin6px">
+
+                                                                    <div class="form-group form-horizontal required">                                                                
+                                                                        <h:outputLabel for="txtDiscardDate" class="control-label col-sm-4" value="Discared Date:"/>    
+                                                                        <div class="col-sm-8">
+                                                                            <p:inputText id="txtDiscardDate" value="#{donorcontroller.discard.discardDate}"
+                                                                                         onclick="displayCalendar('frmDonation:txtDiscardDate', 'frmDonation:txtDiscardDate');"
+                                                                                         required="true" class="form-control" requiredMessage="Enter Discared Date"/> 
+                                                                            <p:message for="txtDiscardDate" display="icon"/>
+                                                                        </div>
+                                                                    </div> 
+
+                                                                </div>
+
+                                                                <div class="col-sm-12 form-horizontal">
+                                                                    <p:separator></p:separator>
+                                                                    <div class="col-sm-6">
+                                                                        <p:commandButton class="btn  btn-block btn-primary col-lg-4 " 
+                                                                                         value="Add Discard"
+                                                                                         id="btnSave" process="@this,inputDiscard,:frmDonation:tblDiscard" 
+                                                                                         action="#{donorcontroller.addDiscard()}"
+                                                                                         update="inputDiscard,:frmDonation,:frmDonation:tblDiscard"/>
+
+                                                                    </div>
+
+                                                                    <div class="col-md-6">
+
+
+                                                                        <p:commandButton class="btn  btn-block btn-primary col-lg-4 " 
+                                                                                         value="Clear"
+                                                                                         id="btnClear" process="@this,inputDiscard,:frmDonation:tblDiscard" 
+                                                                                         action="#{donorcontroller.addDiscard()}"
+                                                                                         update="inputDiscard,:frmDonation,:frmDonation:tblDiscard"/>
+
+
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+
+                                                    </section>
+                                                </section>
+                                            </h:panelGroup>
+                                            <p:dataTable id="tblDiscard"  var="discard" value="#{donorcontroller.discardDataModel}"                                       
+                                                         rowIndexVar="num" widgetVar="tblDiscard" class="dataTable" 
+                                                         rows="10" paginator="true" paginatorPosition="bottom" editable="true">   
+                                                <p:ajax event="rowSelect" process="@this,tblDiscard" 
+                                                        update=":frmDonation:inputDiscard"/>
+                                                <p:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="No"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{num+1}"/>
+                                                </p:column>    
+                                                <p:column >
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Date"/>                                                        
+                                                    </f:facet>
+                                                    <h:outputText value="#{discard.discardDate}"/>
+                                                </p:column> 
+                                                <p:column >
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Reason"/>                                                        
+                                                    </f:facet>
+                                                    <h:outputText value="#{discard.reason}"/>
+                                                </p:column>
+                                                <p:column >
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Venue"/>                                                        
+                                                    </f:facet>
+                                                    <h:outputText value="#{discard.venue}"/>
+                                                </p:column>
+                                                <p:column >
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Screened By:"/>                                                        
+                                                    </f:facet>
+                                                    <h:outputText value="#{discard.screenedBy}"/>
+                                                </p:column>                             
+                                                <p:column headerText="Delete">                                              
+                                                    <p:commandLink action="#{donorcontroller.deleteDiscard()}" style="width: 50px;"
+                                                                   process="@this,tblDiscard" update=":frmDonation:tblDiscard" value="Del" class="ui-icon ui-icon-trash">
+                                                        <p:confirm header="Confirmation" message="Are You sure?" icon="ui-icon-alert"/>
+                                                    </p:commandLink>
+                                                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade"> 
+                                                        <p:commandButton value="Yes" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" style="margin-right: 5px !important;"/>
+                                                        <p:commandButton value="No" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
+                                                    </p:confirmDialog>
+                                                </p:column>
+
+                                                <p:column headerText="Edit">                                              
+                                                    <p:commandLink actionListener="#{donorcontroller.updateDiscard()}" style="width: 50px;"
+                                                                   process=":frmDonation:tblDiscard"  update=":frmDonation:tblDiscard" value="Edit">
+                                                    </p:commandLink>
+                                                </p:column>
+                                            </p:dataTable>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </h:panelGroup>
+            <h:panelGroup id="pnlSave" rendered="#{donorcontroller.renderPnlCreateGatePass}">
+                <section class="panel panel-default"  >
+                    <section class="panel-body" > 
+                        <div class="col-sm-12 textBoxMargin6px">
+                            <div class="col-sm-6">
+                                <div class="col-sm-12 form-horizontal">
+                                    <div class="col-sm-4">
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <p:commandButton class="btn  btn-block btn-primary col-lg-4 " 
+                                                         value="#{donorcontroller.saveOrUpdateButton}"
+                                                         id="btupdateAll" process="@this,inputDonor,:frmDonation:tblDonorHistory,:frmDonation:tblDiscard" 
+                                                         action="#{donorcontroller.create}"
+                                                         update="inputDonor,:frmDonation:tblDonorHistory,:frmDonation:tblDiscard"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </section>
+            </h:panelGroup>
+        </h:form>
+    </ui:define>
+</ui:composition>

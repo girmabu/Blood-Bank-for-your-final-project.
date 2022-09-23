@@ -1,0 +1,202 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                template="../../../resources/templates/templateHome.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns:h="http://xmlns.jcp.org/jsf/html" 
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="navigaion_content">
+        <li class="header">MAIN NAVIGATION</li>  
+        <li class="treeview">
+            <a href="#treeview-menu">
+                <i class="fa fa-lock"></i>
+                <span>Admin</span>
+            </a>
+            <ul class="treeview-menu">
+                <li><a href="../../commonApplication/lookUpManager.xhtml"><i class="fa fa-fw"></i>Lookup</a></li>
+                <li><a href="HospitalReport.xhtml"><i class="fa fa-fw"></i>Report</a></li>
+                  <li><a href="../../commonApplication/report.xhtml"><i class="fa fa-fw"></i>ReportAll</a></li>
+                  <a href=""></a>
+                  
+            </ul>
+              </li> 
+              </ui:define>
+    <ui:define name="contents">
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Dashboard</h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="col-lg-6 col-md-6">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-comments fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge">
+                                            <span  class="NotificationText"> #{employeeController.rows} </span>
+                                            <p:commandLink id="cdLinkNotfa" class="fa fa-fw fa-bell " title="Notification" />
+
+                                        </div>
+                                        <div>Total Employee</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="#">
+                                <div class="panel-footer">
+                                    <span class="pull-left">View Details</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6">
+                        <div class="panel panel-">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-tasks fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge">12</div>
+                                        <div>Total Blood!</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="#">
+                                <div class="panel-footer">
+                                    <span class="pull-left">View Details</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-12">
+                        <div class="panel panel-yellow">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-building-o fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge">
+                                            <span  class="NotificationText"> #{hospitalController.allHosp} </span>
+                                            <p:commandLink id="cmdLinkNotfa" class="fa fa-fw fa-bell " title="Notification" />
+                                        </div>
+                                        <div>Total Hospital</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <p:commandLink id="pnlOverlay" type="button">
+                                    <div class="panel-footer">
+                                        <span class="pull-left">View Details</span>
+                                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </p:commandLink>
+                                <p:overlayPanel for="pnlOverlay" id="overlayT" hideEffect="fade" showEffect="fade" dynamic="true" style="width: 100% !important;">
+                                    <p:dataTable var="data" value="#{hospitalController.hospitalList}" rows="5" paginator="true" >
+                                        <p:column headerText="Id">
+                                            <h:outputText value="#{data.id}"/>
+                                        </p:column>
+                                        <p:column headerText="Name">
+                                            <h:outputText value="#{data.name}"/>
+                                        </p:column>
+                                        <p:column headerText="Email">
+                                            <h:outputText value="#{data.email}"/>
+                                        </p:column>
+                                        <p:column headerText="Phone">
+                                            <h:outputText value="#{data.phone}"/>
+                                        </p:column>
+                                        <p:column headerText="Country">
+                                            <h:outputText value="#{data.country}"/>
+                                        </p:column>
+                                           <p:column headerText="City/Region">
+                                            <h:outputText value="#{data.city} #{data.region}"/>
+                                        </p:column>
+                                    </p:dataTable>
+                                </p:overlayPanel>
+                            </div>
+                        </div>
+                    </div>   
+
+
+                    <!-- /.col-lg-12 -->
+                </div>
+                <!-- /.row -->
+                <div class="row">
+
+                    <div class="col-lg-6 col-md-6">
+                        <div class="panel panel-">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-tasks fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="row">
+                                            <div class="col-xs-7 text-right">
+                                                <div class="huge">
+                                                    <span  class="NotificationText"> #{hospitalController.rows} </span>
+                                                    <p:commandLink id="LinkNotfa" class="fa fa-fw fa-bell " title="Notification" />
+                                                </div>
+                                                <div>Total Blood Requested</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="../Table/TableRequest.xhtml">
+
+                                <div class="panel-footer">
+                                    <span class="pull-left">View Details</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6">
+                        <div class="panel panel-red">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-support fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge">
+                                            <span  class="NotificationText"> #{hospitalController.compReq} </span>
+                                            <p:commandLink id="cLinkNotfa" class="fa fa-fw fa-bell " title="Notification" />    
+                                        </div>
+                                        <div>Completed Request</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="#">
+                                <div class="panel-footer">
+                                    <span class="pull-left">View Details</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ui:define>
+</ui:composition>

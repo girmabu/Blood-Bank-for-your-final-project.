@@ -1,0 +1,339 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    template="../../../resources/templates/templateHome.xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <ui:define name="navigaion_content">
+        <li class="header">MAIN NAVIGATION</li>  
+        <li><a href="../../../Login.xhtml"><i class="fa fa-camera"> </i> <span>Logout</span></a></li> 
+        
+        <li><a href="#"><i class="fa fa-user"></i> <span>Setting</span></a></li> 
+         <li class="header">USER NAVIGATION</li> 
+         
+          <li class="treeview">
+            <a href="#treeview-menu">
+                <i class="fa fa-dashboard"></i>
+
+                <span>Completed Status</span>  
+            </a>
+            <ul class="treeview-menu">
+                <li>
+               
+                    <a href="CompleteTable.xhtml">  Completed Status</a>
+                </li>
+            </ul>
+        </li>
+           
+    </ui:define>
+
+    <ui:define name="contents">
+           <h:form id="frmTop"> 
+            <p:toolbar style="background-color:white;border-color: white ; margin-bottom: 10px">
+                <f:facet name="left">
+                    <span class="ui-separator" style="color: blue">
+                         Logged as: #{logged.loggedName.firstName} #{logged.loggedLname.middleName} #{logged.loggedSurname.lastName}
+                    </span> 
+                </f:facet>
+                <f:facet name="right">
+                   
+                    <span class="ui-separator">
+                        <span class="ui-icon ui-icon-grip-dotted-vertical"/>
+                    </span> 
+                    <a href="TableRequest.xhtml"><i class="fa fa-fw fa-refresh" title="Refresh"></i></a>
+                    <span class="ui-separator">
+                        <span class="ui-icon ui-icon-grip-dotted-vertical"/>
+                    </span>
+                    <a href="../hrmsDashboard.xhtml"><i class="fa fa-fw fa-dashboard" title="Dashboard"></i></a>
+                    <span class="ui-separator">
+                        <span class="ui-icon ui-icon-grip-dotted-vertical"/>
+                    </span>
+                </f:facet>
+            </p:toolbar>
+        </h:form> 
+        <h:form id="frmEmployee">
+
+            <p:growl autoUpdate="true" showDetail="true" severity="information"/>
+            Hospitals Blood Request Amount:- <p:outputLabel value=" #{hospitalController.rows}" style="color: firebrick!important; font-weight: bolder!important;"/>
+            <div class="form-horizontal col-md-12">
+                <h:panelGroup id="pnlTable" style="border: 0px; background-color: transparent" rendered="#{hospitalController.renderPnlManPage}" >
+                    <section class="panel panel-info">
+                        <section class="panel-body">
+                            <div class="form-group">
+                                <p:dataTable id="tblBrequestList" value="#{hospitalController.hospitalpandingList}" var="stat" rowIndexVar="num"
+                                             selectionMode="single"  class="dataTable" rows="7" paginator="true"  rowKey="#{stat.id}" 
+                                             >
+                                    <p:ajax event="rowSelect" process="@this,tblBrequestList" listener="#{hospitalController.populateTable}"
+                                            update="@this,:frmEmployee" />
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value=" No"/>                                                        
+                                        </f:facet>
+                                        <h:outputText  value="#{num+1}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Hospital Address"/>                                                        
+                                        </f:facet>
+                                        <h:outputText  value="#{stat.hospitalid.country} #{stat.hospitalid.city}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Requested Date"/>                                                        
+                                        </f:facet>
+                                        <h:outputText  value="#{stat.requestDate}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Hospital Name"/>
+                                        </f:facet>
+                                        <h:outputText value="#{stat.hospitalid.name} #{stat.hospitalid.type}"/>
+                                    </p:column> 
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Blood Group"/>
+                                        </f:facet>
+                                        <h:outputText value="#{stat.bloodgroupList.bloodgroup}"/>
+                                    </p:column>
+                                     <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Blood GroProductup"/>
+                                        </f:facet>
+                                         <h:outputText value="#{stat.blood_Product}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Units"/>
+                                        </f:facet>
+                                        <h:outputText value="#{stat.units}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Status"/>
+                                        </f:facet>
+                                        <h:outputText value="#{stat.status}"/>
+                                    </p:column>
+                                </p:dataTable>
+                            </div> 
+                        </section>
+                    </section>
+                </h:panelGroup>
+            </div>
+            <h:panelGroup id="inputHospitalBrequest" rendered="#{hospitalController.renderPnlCreateGatePass}">
+                <p:growl id="growl" showDetail="true" autoUpdate="true" severity="information"/>
+                <section class="panel panel-default">
+                    <section class="panel-body" >                                                             
+                        <div class="col-sm-6 ">   
+                            <div class="col-md-12 textBoxMargin6px">
+                                <div class="col-md-12 textBoxMargin6px">
+                                    <h:outputLabel for="txthname" value="Hospital Name:" class="control-label col-sm-4" />                                            
+                                    <div class="col-sm-8 ">    
+                                        <p:outputLabel id="txthname" style="color: background!important;font-weight: lighter" value="#{hospitalController.hospital_Brequest.hospitalid.name}  #{hospitalController.hospital_Brequest.hospitalid.type}" 
+                                                       />
+                                        <p:message for="txthname" display="icon"/>  
+                                    </div>
+                                </div> 
+                            </div>  
+                            <div class="col-md-12 textBoxMargin6px">
+                                <div class="col-md-12 textBoxMargin6px">
+                                    <h:outputLabel for="txtAddress" value="Hospital Address" class="control-label col-sm-4" />                                            
+                                    <div class="col-sm-8 ">    
+                                        <p:outputLabel id="txtAddress" value="#{hospitalController.hospital_Brequest.hospitalid.country} 
+                                                       #{hospitalController.hospital_Brequest.hospitalid.region} 
+                                                       #{hospitalController.hospital_Brequest.hospitalid.city} " 
+                                                       style="color: background!important;font-weight: lighter"     />
+                                        <p:message for="txtAddress" display="icon"/>  
+                                    </div>
+                                </div> 
+                            </div> 
+                            <div class="col-md-12 textBoxMargin6px">
+                                <div class="form-group form-horizontal required">
+                                    <h:outputLabel value="Blood Group:" class="col-md-4 control-label" />
+                                    <div class="col-md-8">
+                                        <p:outputLabel id="txtBloodGroup" style="color: background!important;font-weight: lighter"
+                                                       value="#{hospitalController.hospital_Brequest.bloodgroupList.bloodgroup}" >
+                                        </p:outputLabel>
+                                    </div>
+                                </div>  
+                            </div>  
+                            <div class="col-md-12 textBoxMargin6px">
+                                <div class="form-group form-horizontal required">
+                                    <h:outputLabel value="Blood Product:" class="col-md-4 control-label" />
+                                    <div class="col-md-8">
+                                        <p:outputLabel id="txtBloodProduct" style="color: background!important;font-weight: lighter" 
+                                                       value="#{hospitalController.hospital_Brequest.blood_Product}" > 
+                                        </p:outputLabel>
+                                    </div>
+                                </div>  
+                            </div>  
+                            <div class="col-sm-12 textBoxMargin6px">
+                                <h:outputLabel  class="control-label col-sm-4" value="Requested Units:"/>
+                                <p:outputLabel   id="txtUnits"  style="color: background!important;font-weight: lighter"
+                                                 value="#{hospitalController.hospital_Brequest.units}" />       
+                            </div> 
+
+                            <div class="col-sm-12 textBoxMargin6px">
+                                <h:outputLabel  class="control-label col-sm-4" value="Unit Transfused:"/>
+                                <div class="col-sm-8">                                
+                                    <p:outputLabel   id="txtUnitTransfused" style="color: background!important;font-weight: lighter"
+                                                     value="#{hospitalController.hospital_Brequest.unit_transfused_to}" />       
+                                </div>  
+                            </div>
+                            <div class="col-md-12 textBoxMargin6px">
+                                <div class="form-group form-horizontal required">
+                                    <h:outputLabel for="txtIssueDate" class="control-label col-sm-4" value="Issued Date:"/>    
+                                    <div class="col-sm-8">
+                                        <p:outputLabel id="txtIssueDate" style="color: background!important;font-weight: lighter"
+                                                       value="#{hospitalController.hospital_Brequest.requestDate}"
+                                                       onclick="displayCalendar('frmHospital:txtIssueDate', 'frmHospital:txtIssueDate');"  /> 
+
+                                    </div>
+                                </div> 
+                            </div>
+                            <div class="col-md-12 textBoxMargin6px">
+                                <div class="form-group form-horizontal required">
+                                    <h:outputLabel for="txtExpireDate" class="control-label col-sm-4" value="Expire Date:"/>    
+                                    <div class="col-sm-8">
+                                        <p:outputLabel id="txtExpireDate" style="color: background!important;font-weight: lighter" value="#{hospitalController.hospital_Brequest.expiry_Date}"
+                                                       onclick="displayCalendar('frmHospital:txtExpireDate', 'frmHospital:txtExpireDate');"
+                                                       /> 
+                                    </div>
+                                </div> 
+                            </div>
+                            <div class="col-sm-12 textBoxMargin6px">
+                                <div class="form-group form-horizontal required">   
+                                    <h:outputLabel  class="control-label col-sm-4" value="Age:"/>
+                                    <div class="col-sm-8">                                
+                                        <p:outputLabel   id="txtPatientAge" style="color: background!important;font-weight: lighter"
+                                                         value="#{hospitalController.hospital_Brequest.age}" />       
+                                    </div>  
+                                </div> 
+                            </div>
+                            <div class="col-sm-12 textBoxMargin6px">
+                                <div class="form-group form-horizontal required">   
+                                    <h:outputLabel  class="control-label col-sm-4" value="Transfusing Nurse:"/>
+                                    <div class="col-sm-8">                                
+                                        <p:outputLabel   id="txtTraansfusingNurse" style="color: background!important;font-weight: lighter"
+
+                                                         value="#{hospitalController.hospital_Brequest.transfusing_nurse}" />       
+                                    </div>  
+                                </div> 
+                            </div>
+                            <div class="col-md-12 textBoxMargin6px">
+                                <h:outputLabel value="Reaction/Event" class="control-label col-sm-4"/>                                           
+                                <div class="col-sm-8">
+                                    <p:outputLabel id="txtreaction" class="col-sm-6" style="color: background!important;font-weight: lighter"
+                                                   value="#{hospitalController.hospital_Brequest.reaction}" >
+                                    </p:outputLabel>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 textBoxMargin6px">
+                                <div class="form-group form-horizontal required">   
+                                    <h:outputLabel  class="control-label col-sm-4" value="Remark"/>
+                                    <div class="col-sm-8">                                
+                                        <p:outputLabel   id="txtRemark" style="color: background!important;font-weight: lighter"
+                                                         value="#{hospitalController.hospital_Brequest.remark}" />       
+                                    </div>  
+                                </div> 
+                            </div>
+                        </div>
+                        <div class="col-sm-12 form-horizontal">
+                            <div class="col-sm-4">                                                              
+                            </div>                                                                    
+
+                        </div>
+
+                    </section>
+                </section>
+            </h:panelGroup>
+            <h:panelGroup id="inputApprove" rendered="#{hospitalController.renderPnlCreateGatePass}">
+                <p:growl id="g" autoUpdate="true" showDetail="true"></p:growl>
+                <section class="panel panel-default"  >
+                    <section class="panel-body" >   
+                        <div class="box-body col-sm-12 ">                                                
+                            <div class="col-md-6"> 
+                                <div class="col-md-12 textBoxMargin6px">
+                                    <div class="form-group form-horizontal required">                                                                
+                                        <h:outputLabel for="txtApproveDate" class="control-label col-sm-4" value="Approved Date:"/>    
+                                        <div class="col-sm-8">
+                                            <p:inputText id="txtApproveDate" value="#{hospitalController.hospital_Brequest.supplied_date}"
+                                                         onclick="displayCalendar('frmEmployee:txtApproveDate', 'frmEmployee:txtApproveDate')"
+                                                         required="true" class="form-control" requiredMessage="Enter Approved date"/> 
+                                            <p:message for="txtApproveDate" display="icon"/>
+                                        </div>
+                                    </div> 
+                                </div>
+                                <div class="col-md-12 textBoxMargin6px">
+                                    <div class="form-group form-horizontal required">
+                                        <h:outputLabel value="Blood Group:" class="col-md-4 control-label" />
+                                        <div class="col-md-8">
+                                            <p:outputLabel id="txtSBloodGroup" style="color: background!important;font-weight: lighter"
+                                                           value="#{hospitalController.hospital_Brequest.bloodgroupList.bloodgroup}" >
+                                            </p:outputLabel>
+                                        </div>
+                                    </div>  
+                                </div>  
+                                <div class="col-md-12 textBoxMargin6px">
+                                    <div class="form-group form-horizontal required">
+                                        <h:outputLabel value="Blood Product:" class="col-md-4 control-label" />
+                                        <div class="col-md-8">
+                                            <p:outputLabel id="txtSBloodProduct" style="color: background!important;font-weight: lighter" 
+                                                           value="#{hospitalController.hospital_Brequest.blood_Product}" > 
+                                            </p:outputLabel>
+                                        </div>
+                                    </div>  
+                                </div> 
+                                <div class="col-sm-12 textBoxMargin6px">
+                                    <div class="form-group form-horizontal required">   
+                                        <h:outputLabel  class="control-label col-sm-4" value="Supplied Units:"/>
+                                        <div class="col-sm-8">                                
+                                            <p:inputText   id="txtSuppliedUnit" class="form-control" required="true" requiredMessage="Please Enter Supplied Unit"
+                                                           placeholder="requested amount #{hospitalController.hospital_Brequest.units}"
+                                                           value="#{hospitalController.hospital_Brequest.supplied_unit}" />       
+                                            <p:message for="txtSuppliedUnit" display="icon"/> 
+                                        </div>  
+                                    </div> 
+                                </div>
+                                <div class="col-sm-12 textBoxMargin6px">
+                                    <h:outputLabel  class="control-label col-sm-4" value="Remark"/>
+                                    <div class="col-sm-8">                                
+                                        <p:inputTextarea   id="txtSuppliedRemark" class="form-control" 
+
+                                                           value="#{hospitalController.hospital_Brequest.s_remark}" />       
+                                        <p:message for="txtSuppliedRemark" display="icon"/> 
+                                    </div>  
+                                </div>
+
+                            </div>
+                        </div>
+                    </section>
+                </section>
+            </h:panelGroup>
+            <div class="col-md-12">
+                <h:panelGroup id="pnlSave" rendered="#{hospitalController.renderPnlCreateGatePass}">
+                    <section class="panel panel-default"  >
+                        <section class="panel-body" > 
+                            <div class="col-sm-12 textBoxMargin6px">
+                                <div class="col-sm-6">
+                                    <div class="col-sm-12 form-horizontal">
+                                        <div class="col-sm-8">
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <p:commandButton class="btn  btn-block btn-primary col-lg-4 " 
+                                                             value="Approve"
+                                                             id="btnSave" process="@this,inputApprove" 
+                                                             action="#{hospitalController.saveTable()}"
+                                                             update="@this,:frmEmployee"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </section>
+                </h:panelGroup>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

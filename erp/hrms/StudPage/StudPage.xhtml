@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    template="../../../resources/templates/template.xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:define name="navigaion_content">
+        <li><a href="../hrmsDashboard.xhtml"><i class="fa fa-circle-o text-red"></i> <span>Your Profile</span></a></li> 
+       
+    </ui:define>
+    <ui:define name="contents">
+        <h:form id="frmTop"> 
+            <p:toolbar style="background-color:white;border-color: white ; margin-bottom: 10px">
+                <f:facet name="right">
+                    <p:commandButton validateClient="true" action="#{subjectController.createNewGatePassInfo()}"
+                                     icon="#{subjectController.icone}"  style="background-color: white" 
+                                     process="@this" update="@this" 
+                                     title="#{subjectController.createOrSearchBundle}"/>
+                    <span class="ui-separator">
+                        <span class="ui-icon ui-icon-grip-dotted-vertical"/>
+                    </span> 
+                    <a href="subject.xhtml"><i class="fa fa-fw fa-refresh" title="Refresh"></i></a>
+                    <span class="ui-separator">
+                        <span class="ui-icon ui-icon-grip-dotted-vertical"/>
+                    </span>
+                    <a href="../hrmsDashboard.xhtml"><i class="fa fa-fw fa-dashboard" title="Dashboard"></i></a>
+                    <span class="ui-separator">
+                        <span class="ui-icon ui-icon-grip-dotted-vertical"/>
+                    </span>
+                </f:facet>
+            </p:toolbar>
+        </h:form>
+            <h:panelGroup style="border: 0px; background-color: transparent" id="pnlSearch" rendered="#{subjectController.renderPnlManPage}">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="box box-info ">                      
+                            <div class="box-body ">
+                                <div class="box-body ">
+                                    <div class="box-header" >
+                                        <h3 class="box-title">
+                                            <h:outputLabel id="frmEmployeeHeader"  value="#{subjectController.headerTitle}" />
+                                        </h3>                       
+                                    </div>
+                                     <div class="form-horizontal col-md-12">
+                                         <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <h:outputLabel for="txtSrchName" class="control-label col-sm-4" value="Enter Password"/>                                                          
+                                                        <div class="col-sm-8">  
+                                                            <p:inputText id="txtSrchName" value="#{controllStudPage.role.password}" />                                                                                                                                                
+                                                            <p:message for="txtSrchName" display="icon"/>                                                          
+                                                        </div>
+                                                    </div>
+                                             </div>
+                                                </div>
+                                    <div class="col-md-12" >                                        
+                                        <div class="col-sm-12">
+                                            <div class="col-sm-6" >                                           
+                                              
+                                                <div class="form-horizontal col-md-12">
+                                                    <div class="form-group">
+                                                        <div class="col-sm-4">                                                            
+                                                        </div>                                                          
+                                                        <div class="col-sm-3 ">
+                                                            <p:commandButton class="btn  btn-block btn-primary col-lg-4"  process="@this,txtSrchName"                                                                  
+                                                                             value="Search" action="#{controllStudPage.findByPassword()}"
+                                                                             id="btnSearch"  update=":mList" />
+                                                        </div>
+                                                    </div>
+                                                </div> 
+                                            </div>
+                                        </div>                              
+                                    </div> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>                
+            </h:panelGroup>
+         <h:panelGroup style="border: 0px; background-color: transparent" id="pnlDtSearch1" rendered="#{subjectController.renderPnlManPage}">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="box box-info ">                      
+                            <div class="box-body ">
+                                <div class="box-body ">
+                                    <div class="col-md-12" >  
+                                        <div class="col-md-12" style="margin-top: 30px;">
+                                            <div class="form-group">
+                                                <p:dataTable id="mList" value="#{subjectController.subjectListDataModel}"
+                                                             var="subj" selectionMode="single"  
+                                                             rowKey="#{subj.subjId}"  rows="5" class="dataTable"
+                                                             paginator="true" paginatorPosition="bottom" editable="false"> 
+                                                   
+                                                 
+                                                    <p:column>
+                                                        <f:facet name="header">
+                                                            <h:outputText value="Course"/>                                                        
+                                                        </f:facet>
+                                                        <h:outputText  value="#{subj.subjId}"/>
+                                                    </p:column>
+                                                    <p:column>
+                                                        <f:facet name="header">
+                                                            <h:outputText value="Mark"/>
+                                                        </f:facet>
+                                                        <h:outputText value="#{subj.subjName}" />
+                                                    </p:column> 
+                                                </p:dataTable>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>                   
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </h:panelGroup>
+        
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,521 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                template="../../../resources/templates/templateHome.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns:h="http://xmlns.jcp.org/jsf/html" 
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="navigaion_content">
+        <li class="header">MAIN NAVIGATION</li>  
+        <li class="treeview">
+            <a href="../../../Login.xhtml">
+
+                <i class="fa fa-camera"></i>
+                <span>Logout</span>
+            </a>
+        </li>
+        <li class="header">USER NAVIGATION</li> 
+        <li class="treeview">
+
+            <a href="../Hospital/HospitalProfile.xhtml">
+
+                <i class="fa fa-dashboard"></i>
+                <span>Dashboard</span>
+            </a>
+        </li>
+    </ui:define>
+
+    <ui:define name="contents">
+
+
+        <h:form id="frmTop"> 
+            <p:toolbar style="background-color:white;border-color: white ; margin-bottom: 10px">
+                <f:facet name="left">
+                    <span class="ui-separator">
+                        <span>Logged as: #{hospitalController.loggedHospName.name} #{hospitalController.loggedHospName.type} </span> 
+
+                    </span>
+                </f:facet>
+                <f:facet name="right">
+                    <span class="ui-separator">
+                        <span class="ui-icon ui-icon-grip-dotted-vertical"/>
+                    </span> 
+                    <a href="HospitalReport.xhtml"><i class="fa fa-fw fa-refresh" title="Refresh"></i></a>
+                    <span class="ui-separator">
+                        <span class="ui-icon ui-icon-grip-dotted-vertical"/>
+                    </span>
+                    <a href="../hrmsDashboard.xhtml"><i class="fa fa-fw fa-dashboard" title="Dashboard"></i></a>
+                    <span class="ui-separator">
+                        <span class="ui-icon ui-icon-grip-dotted-vertical"/>
+                    </span>
+                </f:facet>
+            </p:toolbar>
+        </h:form> 
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header" style="color: orangered!important;">Dashboard  BSIS</h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+
+
+
+                    <!-- /.col-lg-12 -->
+                </div>
+                <!-- /.row -->
+                <div class="row">
+
+                    <div class="col-lg-6 col-md-12">
+                        <div class="panel panel-">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3"  style="color: red!important;">
+                                        <i class="fa fa-tasks fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="row">
+
+                                            <div class="col-xs-9 text-right">
+                                                <div class="huge">
+                                                    <span  class="NotificationText"> #{hospitalController.compReq} </span>
+                                                    <p:commandLink id="LinkallRequest" class="fa fa-fw fa-bell " title="Notification" />
+                                                </div>
+                                                <div>Total Blood Requested</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="../Table/TableRequest.xhtml">
+
+                                <div class="panel-footer">
+                                    <span class="pull-left">View Details</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-12">
+                        <div class="panel panel-red">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3" style="color: red!important;">
+                                        <i class="fa fa-support fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge">
+                                            <span  class="NotificationText"> #{hospitalController.compReq} </span>
+                                            <p:commandLink id="cLinkAllAccept" class="fa fa-fw fa-bell " title="Notification" />    
+                                        </div>
+                                        <div>Total Blood Accept</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="#">
+                                <div class="panel-footer">
+                                    <span class="pull-left">View Details</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3" style="color: coral!important;">
+                                        <i class="fa fa-bar-chart fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="row">
+                                            <div class="col-xs-7 text-right">
+                                                <div class="huge">
+                                                    <span  class="NotificationText"> #{hospitalController.compReq} </span>
+                                                    <p:commandLink id="September" class="fa fa-fw fa-bell " title="Notification" />
+                                                </div>
+                                                <div>September</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="../Table/TableRequest.xhtml">
+
+                                <div class="panel-footer">
+                                    <span class="pull-left">View Details</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+
+                        </div>
+                    </div>
+
+
+                    <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3" style="color: coral!important;">
+                                        <i class="fa fa-bar-chart fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="row">
+                                            <div class="col-xs-7 text-right">
+                                                <div class="huge">
+                                                    <span  class="NotificationText"> #{hospitalController.compReq} </span>
+                                                    <p:commandLink id="October" class="fa fa-fw fa-bell " title="Notification" />
+                                                </div>
+                                                <div>October</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="../Table/TableRequest.xhtml">
+
+                                <div class="panel-footer">
+                                    <span class="pull-left">View Details</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3" style="color: coral!important;">
+                                        <i class="fa fa-bar-chart fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="row">
+                                            <div class="col-xs-7 text-right">
+                                                <div class="huge">
+                                                    <span  class="NotificationText"> #{hospitalController.compReq} </span>
+                                                    <p:commandLink id="Novemeber" class="fa fa-fw fa-bell " title="Notification" />
+                                                </div>
+                                                <div>November</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="../Table/TableRequest.xhtml">
+
+                                <div class="panel-footer">
+                                    <span class="pull-left">View Details</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3" style="color: coral!important;">
+                                        <i class="fa fa-bar-chart fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="row">
+                                            <div class="col-xs-7 text-right">
+                                                <div class="huge">
+                                                    <span  class="NotificationText"> #{hospitalController.compReq} </span>
+                                                    <p:commandLink id="December" class="fa fa-fw fa-bell " title="Notification" />
+                                                </div>
+                                                <div>December</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="../Table/TableRequest.xhtml">
+
+                                <div class="panel-footer">
+                                    <span class="pull-left">View Details</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3" style="color: coral!important;">
+                                        <i class="fa fa-bar-chart fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="row">
+                                            <div class="col-xs-7 text-right">
+                                                <div class="huge">
+                                                    <span  class="NotificationText"> #{hospitalController.compReq} </span>
+                                                    <p:commandLink id="January" class="fa fa-fw fa-bell " title="Notification" />
+                                                </div>
+                                                <div>January</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="../Table/TableRequest.xhtml">
+
+                                <div class="panel-footer">
+                                    <span class="pull-left">View Details</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3" style="color: coral!important;">
+                                        <i class="fa fa-bar-chart fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="row">
+                                            <div class="col-xs-7 text-right">
+                                                <div class="huge">
+                                                    <span  class="NotificationText"> #{hospitalController.compReq} </span>
+                                                    <p:commandLink id="February" class="fa fa-fw fa-bell " title="Notification" />
+                                                </div>
+                                                <div>February</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="../Table/TableRequest.xhtml">
+
+                                <div class="panel-footer">
+                                    <span class="pull-left">View Details</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3" style="color: coral!important;">
+                                        <i class="fa fa-bar-chart fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="row">
+                                            <div class="col-xs-7 text-right">
+                                                <div class="huge">
+                                                    <span  class="NotificationText"> #{hospitalController.compReq} </span>
+                                                    <p:commandLink id="March" class="fa fa-fw fa-bell " title="Notification" />
+                                                </div>
+                                                <div>March</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="../Table/TableRequest.xhtml">
+
+                                <div class="panel-footer">
+                                    <span class="pull-left">View Details</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3" style="color: coral!important;">
+                                        <i class="fa fa-bar-chart fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="row">
+                                            <div class="col-xs-7 text-right">
+                                                <div class="huge">
+                                                    <span  class="NotificationText"> #{hospitalController.compReq} </span>
+                                                    <p:commandLink id="April" class="fa fa-fw fa-bell " title="Notification" />
+                                                </div>
+                                                <div>April</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="../Table/TableRequest.xhtml">
+
+                                <div class="panel-footer">
+                                    <span class="pull-left">View Details</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3" style="color: coral!important;">
+                                    <i class="fa fa-bar-chart fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="row">
+                                        <div class="col-xs-7 text-right">
+                                            <div class="huge">
+                                                <span  class="NotificationText"> #{hospitalController.compReq} </span>
+                                                <p:commandLink id="may" class="fa fa-fw fa-bell " title="Notification" />
+                                            </div>
+                                            <div>May</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="../Table/TableRequest.xhtml">
+
+                            <div class="panel-footer">
+                                <span class="pull-left">View Details</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3" style="color: coral!important;">
+                                    <i class="fa fa-bar-chart fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="row">
+                                        <div class="col-xs-7 text-right">
+                                            <div class="huge">
+                                                <span  class="NotificationText"> #{hospitalController.compReq} </span>
+                                                <p:commandLink id="June" class="fa fa-fw fa-bell " title="Notification" />
+                                            </div>
+                                            <div>June</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="../Table/TableRequest.xhtml">
+
+                            <div class="panel-footer">
+                                <span class="pull-left">View Details</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3" style="color: coral!important;">
+                                    <i class="fa fa-bar-chart fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="row">
+                                        <div class="col-xs-7 text-right">
+                                            <div class="huge">
+                                                <span  class="NotificationText"> #{hospitalController.compReq} </span>
+                                                <p:commandLink id="July" class="fa fa-fw fa-bell " title="Notification" />
+                                            </div>
+                                            <div>July</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="../Table/TableRequest.xhtml">
+
+                            <div class="panel-footer">
+                                <span class="pull-left">View Details</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3" style="color: coral!important;">
+                                    <i class="fa fa-bar-chart fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="row">
+                                        <div class="col-xs-7 text-right">
+                                            <div class="huge">
+                                                <span  class="NotificationText"> #{hospitalController.compReq} </span>
+                                                <p:commandLink id="August" class="fa fa-fw fa-bell " title="Notification" />
+                                            </div>
+                                            <div>August</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="../Table/TableRequest.xhtml">
+
+                            <div class="panel-footer">
+                                <span class="pull-left">View Details</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+
+            </div>
+        </div>
+    </ui:define>
+</ui:composition>
